@@ -77,6 +77,7 @@ if ${use_color} ; then
 
 	alias ls='ls --color=auto'
     alias lS='ls -las'
+    alias cD='cd ~/Desktop'
 	alias grep='grep --colour=auto'
 	alias egrep='egrep --colour=auto'
 	alias fgrep='fgrep --colour=auto'
