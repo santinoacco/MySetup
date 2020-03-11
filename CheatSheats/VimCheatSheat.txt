@@ -28,7 +28,7 @@ b       bracket
 t       tag block
 
 #====== MOTIONS ======
-]m     go to beginning of next method.
+]m      go to beginning of next method.
 +       down to first non-blank char of line 
 %       jump to match of next paren or bracket
 
@@ -38,6 +38,7 @@ t       tag block
 m{a-z or A-Z}       sets a mark
 `{mark}             go to mark
 :marks              shows all marks
+:delmarks {mark}    deletes mark
 
 #====== SNIPPETS ======
 <file_name>.snippets            create a file.snippets to store your snippets

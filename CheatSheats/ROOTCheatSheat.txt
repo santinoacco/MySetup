@@ -1,0 +1,14 @@
+To get the keys from a file:
+--------------------------
+f=ROOT.TFile("<filename>")
+storage=[]
+for k in f.GetListOfKeys():
+    kname = k.GetName() # you may have to specify that kname shall be a str type.
+    storage.append(f.Get(kname))
+
+**************************
+To get objects from a file:
+f.Get(<obj name>)
+
+To see whats inside a file:
+f.ls()
