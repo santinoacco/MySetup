@@ -11,7 +11,13 @@ import SwanImports
 
 
 def Config_Parse():
-     
+    """
+    Set all the configuration to your parser object.
+
+    #Args::None
+
+    #Returns::parser object.
+    """
     parser = argparse.ArgumentParser('<Name>')
     parser.add_argument('-I', '--Input', required=True, help='<Input folder or file/s>' )
     parser.add_argument('-O', '--Output', required=True, help='<Output folder or files/s>')
