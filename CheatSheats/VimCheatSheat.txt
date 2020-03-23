@@ -46,5 +46,6 @@ m{a-z or A-Z}       sets a mark
 :SnipMateOpenSnippetFiles       list all files.snippets that is reading from
 
 #===== Spell mistakes =====
-:set spell spelllang=<langague like en_us/es>
-:set nospell                                    disable
+:set spell spelllang=<lang>     <lang> = en_us or es
+:set nospell                    disable
+zg                              (NORMAL mode) adds word to dict

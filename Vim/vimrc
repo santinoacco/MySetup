@@ -171,6 +171,12 @@ syntax on
 " show line numbers
 "   set nu
 
+" mapping for spelling mistake
+"  -- spanish
+nmap sples :set spell spelllang=es<CR>
+"  -- english
+nmap splen :set spell spelllang=en_us<CR>
+nmap qspl :set nospell<CR>
 " tab navigation mappings
 map tn :tabn<CR>
 map tp :tabp<CR>
