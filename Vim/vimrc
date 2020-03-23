@@ -144,6 +144,8 @@ set expandtab
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
+" windows split from below
+set splitbelow
 
 " tab length exceptions on some file types
 "   autocmd FileType html setlocal shiftwidth=4 tabstop=4 softtabstop=4

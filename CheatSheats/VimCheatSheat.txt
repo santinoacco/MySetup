@@ -44,3 +44,7 @@ m{a-z or A-Z}       sets a mark
 <file_name>.snippets            create a file.snippets to store your snippets
 :SnipMateLoadScope <file_name>  add this file to buffer so it can be read.
 :SnipMateOpenSnippetFiles       list all files.snippets that is reading from
+
+#===== Spell mistakes =====
+:set spell spelllang=<langague like en_us/es>
+:set nospell                                    disable
