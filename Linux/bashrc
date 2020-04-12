@@ -1,6 +1,11 @@
-
 # ~/.bashrc
 #
+
+# ---->  Exports
+export EDITOR=vim                       # use vim as editor
+export PATH                             # use path
+export HISTCONTROL=ignoreboth           # avoid duplicates
+
 
 [[ $- != *i* ]] && return
 
@@ -76,8 +81,6 @@ if ${use_color} ; then
 	fi
 
 	alias ls='ls --color=auto'
-    alias lS='ls -las'
-    alias cD='cd ~/Desktop'
 	alias grep='grep --colour=auto'
 	alias egrep='egrep --colour=auto'
 	alias fgrep='fgrep --colour=auto'
@@ -92,15 +95,19 @@ fi
 
 unset use_color safe_term match_lhs sh
 
-alias cp="cp -i"                          # confirm before overwriting something
-alias df='df -h'                          # human-readable sizes
-alias free='free -m'                      # show sizes in MB
+# ----> Aliases
+alias g='git'
+alias gs='git status'
+alias cp="cp -i"                        # confirm before overwriting something
+alias rm='rm -i'                        # confirm before deleting
+alias df='df -h'                        # human-readable sizes
+alias free='free -m'                    # show sizes in MB
 alias np='nano -w PKGBUILD'
 alias more=less
+alias lS='ls -las'
+alias cD='cd ~/Desktop'
+alias lx='ssh snoaccor@lxplus.cern.ch'  # init session at lxplus
 
-alias lx='ssh snoaccor@lxplus.cern.ch'    # init session at lxplus
-alias cls='clear'
-alias google='google-chrome-stable'
 xhost +local:root > /dev/null 2>&1
 
 complete -cf sudo
@@ -118,6 +125,7 @@ shopt -s expand_aliases
 # Enable history appending instead of overwriting.  #139609
 shopt -s histappend
 
+shopt -s autocd                         # implicit cd
 #
 # # ex - archive extractor
 # # usage: ex <file>

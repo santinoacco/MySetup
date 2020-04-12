@@ -13,9 +13,9 @@ def config_Parse():
     """
     Set all the configuration to your parser object.
 
-    #Args::None
+    # Args::None
 
-    #Returns::parser object.
+    # Returns::parser object.
     """
     parser = argparse.ArgumentParser('<Name>')
     parser.add_argument('-I', '--Input', required=True, help='<Input folder or file/s>' )

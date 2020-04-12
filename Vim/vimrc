@@ -33,24 +33,15 @@ call plug#begin('~/.vim/plugged')
 
 " Plugins from github repos:
 
-" LaTex vimtex
-Plug 'lervag/vimtex'
-" Override configs by directory 
-Plug 'arielrossanigo/dir-configs-override.vim'
-" Better file browser
-Plug 'scrooloose/nerdtree'
-" Code commenter
-Plug 'scrooloose/nerdcommenter'
-" Class/module browser
-Plug 'majutsushi/tagbar'
-" Code and files fuzzy finder
-Plug 'ctrlpvim/ctrlp.vim'
-" Extension to ctrlp, for fuzzy command finder
-Plug 'fisadev/vim-ctrlp-cmdpalette'
-" Zen coding
-Plug 'mattn/emmet-vim'
-" Git integration
-Plug 'motemen/git-vim'
+Plug 'lervag/vimtex'                                " LaTex vimtex
+Plug 'motemen/git-vim'                              " Git integration
+"""Plug 'arielrossanigo/dir-configs-override.vim'       " Override configs by directory 
+Plug 'scrooloose/nerdtree'                          " Better file browser
+Plug 'scrooloose/nerdcommenter'                     " Code commenter
+"""Plug 'majutsushi/tagbar'                             " Class/module browser
+"""Plug 'ctrlpvim/ctrlp.vim'                            " Code and files fuzzy finder
+"""Plug 'fisadev/vim-ctrlp-cmdpalette'                  " Extension to ctrlp, for fuzzy command finder
+Plug 'mattn/emmet-vim'                              " Zen coding
 " Tab list panel
 Plug 'kien/tabman.vim'
 " Airline
@@ -70,11 +61,9 @@ Plug 'Townk/vim-autoclose'
 Plug 'michaeljsmith/vim-indent-object'
 " Indentation based movements
 Plug 'jeetsukumaran/vim-indentwise'
-" Python autocompletion, go to definition.
-Plug 'davidhalter/jedi-vim'
-" Better autocompletion
+Plug 'davidhalter/jedi-vim'                         " Python autocompletion, go to definition.
 "Plug 'Shougo/neocomplcache.vim'
-Plug 'Shougo/neocomplete.vim'
+Plug 'Shougo/neocomplete.vim'                       " Better autocompletion
 " Snippets manager (SnipMate), dependencies, and snippets repo
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
@@ -86,8 +75,7 @@ Plug 'mhinz/vim-signify'
 Plug 'fisadev/vim-isort'
 " Drag visual blocks arround
 Plug 'fisadev/dragvisuals.vim'
-" Window chooser
-Plug 't9md/vim-choosewin'
+Plug 't9md/vim-choosewin'                           " Window chooser
 " Python and other languages code checker
 Plug 'scrooloose/syntastic'
 " Paint css colors with the real color
@@ -111,10 +99,8 @@ endif
 Plug 'vim-scripts/IndexedSearch'
 "" XML/HTML tags navigation
 "Plug 'vim-scripts/matchit.zip'
-" Gvim colorscheme
-Plug 'vim-scripts/Wombat'
-" Yank history navigation
-Plug 'vim-scripts/YankRing.vim'
+Plug 'vim-scripts/Wombat'                       " Gvim colorscheme
+Plug 'vim-scripts/YankRing.vim'                 " Yank history navigation
 
 
 " Tell vim-plug we finished declaring plugins, so it can load them
@@ -144,8 +130,7 @@ set expandtab
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
-" windows split from below
-set splitbelow
+set splitbelow                      " windows split from below
 
 " tab length exceptions on some file types
 "   autocmd FileType html setlocal shiftwidth=4 tabstop=4 softtabstop=4
@@ -243,10 +228,10 @@ set nofoldenable        "so all files open unfolded"
 set wildmode=list:longest
 
 " better backup, swap and undos storage
-set directory=~/.vim/dirs/tmp     " directory to place swap files in
-set backup                        " make backup files
-set backupdir=~/.vim/dirs/backups " where to put backup files
-set undofile                      " persistent undos - undo after you re-open the file
+set directory=~/.vim/dirs/tmp                 " directory to place swap files in
+set backup                                    " make backup files
+set backupdir=~/.vim/dirs/backups             " where to put backup files
+set undofile                                  " persistent undos - undo after you re-open the file
 set undodir=~/.vim/dirs/undos
 set viminfo+=n~/.vim/dirs/viminfo
 " store yankring history file there too
