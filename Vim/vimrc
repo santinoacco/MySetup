@@ -7,40 +7,40 @@
 " and use a font from https://github.com/ryanoasis/nerd-fonts in your terminal 
 " (if you aren't using one of those fonts, you will see funny characters here. 
 " Turst me, they look nice when using one of those fonts).
-let fancy_symbols_enabled = 0
+    let fancy_symbols_enabled = 0
 
 
-set encoding=utf-8
-let using_neovim = has('nvim')
-let using_vim = !using_neovim
+    set encoding=utf-8
+    let using_neovim = has('nvim')
+    let using_vim = !using_neovim
 
 " ============================================================================
 " Vim-plug initialization
 " Avoid modify this section, unless you are very sure of what you are doing
 
-let vim_plug_just_installed = 0
-if using_neovim
-    let vim_plug_path = expand('~/.config/nvim/autoload/plug.vim')
-else
-    let vim_plug_path = expand('~/.vim/autoload/plug.vim')
-endif
-if !filereadable(vim_plug_path)
-    echo "Installing Vim-plug..."
-    echo ""
+    let vim_plug_just_installed = 0
     if using_neovim
-        silent !mkdir -p ~/.config/nvim/autoload
-        silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        let vim_plug_path = expand('~/.config/nvim/autoload/plug.vim')
     else
-        silent !mkdir -p ~/.vim/autoload
-        silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        let vim_plug_path = expand('~/.vim/autoload/plug.vim')
     endif
-    let vim_plug_just_installed = 1
-endif
+    if !filereadable(vim_plug_path)
+        echo "Installing Vim-plug..."
+        echo ""
+        if using_neovim
+            silent !mkdir -p ~/.config/nvim/autoload
+            silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        else
+            silent !mkdir -p ~/.vim/autoload
+            silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        endif
+        let vim_plug_just_installed = 1
+    endif
 
-" manually load vim-plug the first time
-if vim_plug_just_installed
-    :execute 'source '.fnameescape(vim_plug_path)
-endif
+    " manually load vim-plug the first time
+    if vim_plug_just_installed
+        :execute 'source '.fnameescape(vim_plug_path)
+    endif
 
 " Obscure hacks done, you can now modify the rest of the .vimrc as you wish :)
 " IMPORTANT: some things in the config are vim or neovim specific. It's easy 
@@ -50,12 +50,12 @@ endif
 
 " this needs to be here,
 "  so vim-plug knows we are declaring the plugins we want to use
-call plug#begin('~/.vim/plugged')
-if using_neovim
-    call plug#begin("~/.config/nvim/plugged")
-else
-    call plug#begin("~/.vim/plugged")
-endif
+    call plug#begin('~/.vim/plugged')
+    if using_neovim
+        call plug#begin("~/.config/nvim/plugged")
+    else
+        call plug#begin("~/.vim/plugged")
+    endif
 
 
 " You can disable or add new ones here:
@@ -94,7 +94,12 @@ endif
         Plug 'Shougo/deoplete.nvim', {'do': ':autocmd VimEnter * UpdateRemotePlugins'}
     else
         Plug 'Shougo/deoplete.nvim'
+        Plug 'roxma/nvim-yarp'
+        Plug 'roxma/vim-hug-neovim-rpc'
     endif
+
+" -Python autocompletion
+    Plug 'deoplete-plugins/deoplete-jedi'
 
 " -Automatically close parenthesis, etc
     Plug 'Townk/vim-autoclose'
@@ -110,7 +115,7 @@ endif
 
 " -Python and other languages code checker
     Plug 'scrooloose/syntastic'
-    if has('python')
+    if has('python3')
         " YAPF formatter for Python
         Plug 'pignacio/vim-yapf-format'
     endif
@@ -118,13 +123,6 @@ endif
 
 " ----> Inactive plugins
 """ -Async autocompletion
-""  TODO: test this
-""    Plug 'roxma/nvim-yarp'
-""    Plug 'roxma/vim-hug-neovim-rpc'
-
-""  TODO: test this
-""" -Python autocompletion
-""    Plug 'deoplete-plugins/deoplete-jedi'
 
 ""  TODO: test this
 """ -Completion from other opened files
@@ -413,7 +411,6 @@ end
     " -Complete with words from any opened file
     let g:context_filetype#same_filetypes = {}
     let g:context_filetype#same_filetypes._ = '_'
-
 
 " Syntastic ------------------------------
     " show list of errors and warnings on the current file
