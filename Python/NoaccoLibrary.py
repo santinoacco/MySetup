@@ -44,11 +44,12 @@ def my_seaborn_style():
 def my_plt_style(plot_obj):
     pass
     #assert(type(plot_obj) == plt.figure.Figure), 'check plot_obj type'
-    #plot_obj.set_xlabel 
+    #plot_obj.set_xlabel
     #return
 
-#def my_plotter_2D(plot_name, x_data, y_data, param_dict):
-def my_plotter_2D(ax, x_data, y_data, param_dict):
+# def my_plotter_2D(ax, x_data, y_data,xlabel, ylabel, param_dict):
+m_default_param_dict = {}
+def my_plotter_2D(plot_name, ax, x_data, y_data, xlabel, ylabel, param_dict):
     """
         A helper function to make a graph
 
@@ -71,18 +72,19 @@ def my_plotter_2D(ax, x_data, y_data, param_dict):
         out : list
             list of artists added
     """
-    #common_plots = {
-    #        'plot':ax.plot, 'scatter':ax.scatter,
-    #        'errorbar':ax.errorbar, 'date':ax.plot_date,
-    #        'hist':ax.hist
-    #        }
-
-    #out = common_plots[plot_name](x_data, y_data, **param_dict)
-    out = ax.plot(x_data, y_data, **param_dict)
-    #ax = out.gca()
+    common_plots = {
+           'plot':ax.plot,
+           'scatter':ax.scatter,
+           'errorbar':ax.errorbar,
+           'date':ax.plot_date,
+           'hist':ax.hist
+           }
     ax.set_xlabel(xlabel)
     ax.set_ylabel(ylabel)
     ax.legend()
+    out = common_plots[plot_name](x_data, y_data, **param_dict)
+    #out = ax.plot(x_data, y_data, **param_dict)
+    #ax = out.gca()
 
     return out
 # ===== ROOT ===== #
@@ -107,30 +109,28 @@ def append_to_excel(dict_of_DF, file_to_write, sheetname, last_month_loaded):
     -------
     None.
 
-    '''    
-    
-
+    '''
     writer = pd.ExcelWriter(
             file_to_write,
             engine='openpyxl',
             mode='a',
             date_format='DD/MM/YYYY'
             )
-   
+
     # -- Read workbook from file
     book = load_workbook(file_to_write)
     writer.book = book
     # -- Get the info of the existing sheets
     writer.sheets = dict((ws.title, ws) for ws in book.worksheets)
-    
-    
+
+
     from_month = Meses[last_month_loaded]
     col_step = len(dict_of_DF[from_month].columns) + 1
     init_col = last_month_loaded*col_step
-    
+
     sub_key_list = [k for k in dict_of_DF.keys()][last_month_loaded:]
-    
-    
+
+
     for month in sub_key_list:
         assert len(dict_of_DF[month])!=0, f'month {month} is empty'
         dict_of_DF[month].to_excel(
@@ -139,10 +139,10 @@ def append_to_excel(dict_of_DF, file_to_write, sheetname, last_month_loaded):
                 startrow=1,
                 startcol=init_col
                 )
-        
+
         init_col+=col_step
-    
-    
+
+
     writer.save()
     print(f'>>> Successfully loaded data to {file_to_write}')
     return

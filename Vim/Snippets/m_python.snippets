@@ -16,8 +16,6 @@ snippet basicimport
 snippet rootimport
 	import ROOT as r
 	import SwanImports
-snippet sysimport
-	import sys, argparse
 # Module Docstring
 snippet docs
 	"""
@@ -31,12 +29,13 @@ snippet docstring
 	"""
 	${0:Description}
 	
-	#Args::${1:None}}
+	# Args::${1:None}}
 
-	#Returns::${2:${VISUAL}}
+	# Returns::${2:${VISUAL}}
 	"""
 # if __name__ == '__main__':
 snippet main
+	import sys
 	def main(argv):
 		parser = Config_Parse()
 		args = parser.parse_args()	
@@ -48,6 +47,25 @@ snippet main
 # argparse 
 snippet addarg
 	parser.add_argument("${0:short_arg}", "${1:long_arg}", required=${2:False}, default=${3:None}, help="${4:Help text}")
+snippet configparse
+	import argparse
+	def config_Parse():
+		"""
+		Set all the configuration to your parser object.
+
+		# Args::None
+
+		# Returns::parser object.
+		"""
+		parser = argparse.ArgumentParser('${0:name}')
+		parser.add_argument('-I', '--Input', required=True, help='<${1:Input folder or file/s}>' )
+		parser.add_argument('-O', '--Output', required=True, help='<${2:Output folder or files/s}>')
+		parser.add_argument('-D','--Debug', required=False, help='Debug flag', action='store_true')
+		parser.add_argument('-M','--MaxEvents', required=False, help='Set maximum of events. Default -1 == all', type=int, default=-1)
+		return parser
+# Plots
+snippet pltfig
+	fig, ax = plt.subplots(${0})
 # For
 snippet for
 	for ${1:item} in ${2:items}:
@@ -55,13 +73,18 @@ snippet for
 snippet zip
 	for ${1:item1}, ${2:item2} in zip(${3:iter1}, ${4:iter2}):
 		${0}
-# comprehensions
+# Comprehensions
 snippet lcp list comprehension
 	[${1} for ${2} in ${3:${VISUAL}}]${0}
 
 snippet dcp dict comprehension
 	{${1}: ${2} for ${3} in ${4:${VISUAL}}}${0}
 # Plots
+
+# Load a path to add libraries
+snippet load_lib
+	from sys.path import insert
+	insert(0,'${0:path_to_dir}')
 
 #*************************************************************#
 #************************ LESS USEFUL ************************#
