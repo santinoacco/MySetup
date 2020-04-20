@@ -9,7 +9,6 @@
 " Turst me, they look nice when using one of those fonts).
     let fancy_symbols_enabled = 0
 
-
     set encoding=utf-8
     let using_neovim = has('nvim')
     let using_vim = !using_neovim
@@ -322,17 +321,20 @@ end
     nmap<silent> ,nu :set nu rnu<CR>
     nmap<silent> ,nnu :set nonu nornu<CR>
 
-""" simple recursive grep (requires Ack installed)
-""    nmap ,r :Ack 
-""    nmap ,wr :Ack <cword><CR>
-
-" mapping for spelling mistake
+" -Mapping for spelling mistake
     "  -- spanish
     nmap sples :set spell spelllang=es<CR>
     "  -- english
     nmap splen :set spell spelllang=en_us<CR>
     "  -- exit
     nmap qspl :set nospell<CR>
+
+" -Mapping Paste Mode on/off
+    nmap <F5> :set paste<CR><ESC>
+    nmap <F5> :set nopaste<CR><ESC> 
+""" simple recursive grep (requires Ack installed)
+""    nmap ,r :Ack 
+""    nmap ,wr :Ack <cword><CR>
 
 """ -Tab navigation mappings
 ""    map tn :tabn<CR>

@@ -48,21 +48,27 @@ def my_plt_style(plot_obj):
     #return
 
 # def my_plotter_2D(ax, x_data, y_data,xlabel, ylabel, param_dict):
-m_default_param_dict = {}
-def my_plotter_2D(plot_name, ax, x_data, y_data, xlabel, ylabel, param_dict):
+m_default_param_dict = {
+        'plot':{'marker':'o','color':'blue','linestyle':'--'},
+        'date':{'marker':'+','color':'green','linestyle':'--','linewidth':12},
+        }
+
+# m_default_info_dict = {'xlabel':None,
+        # }
+        # 'pie':{'colors':None, 'autopct':'%1.1f%%','shadow':True},
+def my_plotter_2D(plot_name, ax, x_data, y_data, xlabel=None, ylabel=None,title=None, param_dict=None):
     """
         A helper function to make a graph
 
         Parameters
         ----------
         ax : Axes
-            The axes to draw to
 
-        data1 : array
-           The x data
+        x_data : array
+           The data along the x-axis
 
         data2 : array
-           The y data
+           The data along the y-axis
 
         param_dict : dict
            Dictionary of kwargs to pass to ax.plot
@@ -72,21 +78,42 @@ def my_plotter_2D(plot_name, ax, x_data, y_data, xlabel, ylabel, param_dict):
         out : list
             list of artists added
     """
+    if param_dict == None:
+        param_dict = m_default_param_dict[plot_name]
+
     common_plots = {
            'plot':ax.plot,
            'scatter':ax.scatter,
            'errorbar':ax.errorbar,
            'date':ax.plot_date,
-           'hist':ax.hist
+           'hist':ax.hist,
            }
     ax.set_xlabel(xlabel)
     ax.set_ylabel(ylabel)
+    ax.set(title=title)
     ax.legend()
     out = common_plots[plot_name](x_data, y_data, **param_dict)
-    #out = ax.plot(x_data, y_data, **param_dict)
-    #ax = out.gca()
 
     return out
+# 'pie':{'colors':None, 'autopct':'%1.1f%%','shadow':True},
+
+def my_pie(data, labels, colors,title):
+    fig, ax = plt.subplots()
+    out_pie = ax.pie(
+                    data,
+                    labels=labels,
+                    autopct='%1.1f%%',  # --Show percentaje
+                    shadow=True,
+                    colors=colors
+                    )
+    ax.set(title=title)
+
+    return out_pie
+
+# == Interactive Plots
+import altair as alt
+
+
 # ===== ROOT ===== #
 
 # ===== add to Excel ===== #
