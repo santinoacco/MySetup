@@ -98,6 +98,9 @@ unset use_color safe_term match_lhs sh
 # ----> Aliases
 alias g='git'
 alias gs='git status'
+alias gA='git add -A'
+alias gC='git commit -am'
+alias gPom='git push origin master'
 alias cp="cp -i"                        # confirm before overwriting something
 alias rm='rm -i'                        # confirm before deleting
 alias df='df -h'                        # human-readable sizes

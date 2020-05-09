@@ -466,6 +466,9 @@ end
     let g:airline_theme = 'bubblegum'
     let g:airline#extensions#whitespace#enabled = 0
 
+" Airline ------------------------------
+    let g:vimwiki_list = [{'path': '~/vimwiki/',
+                          \ 'syntax': 'markdown', 'ext': '.md'}]
 " Snippets engine
 "ActivateAddons vim-snippets UltiSnips
 

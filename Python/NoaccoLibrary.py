@@ -47,16 +47,46 @@ def my_plt_style(plot_obj):
     #plot_obj.set_xlabel
     #return
 
+_default_cmap = plt.get_cmap('tab20c')
+
 # def my_plotter_2D(ax, x_data, y_data,xlabel, ylabel, param_dict):
 m_default_param_dict = {
-        'plot':{'marker':'o','color':'blue','linestyle':'--'},
-        'date':{'marker':'+','color':'green','linestyle':'--','linewidth':12},
+        'hist':{}
+        }
+_default_style={
+        'plot':{
+            'marker':'o',
+            'mfc':'none',
+            'color':'blue',
+            'linestyle':'--'
+            },
+        'date':{
+            'marker':'H',
+            'mfc':'none',
+            'color':'green',
+            'linestyle':'--',
+            'linewidth':3,
+            },
+        'hist':{
+            'density':True,            #--> normalized histogram
+            'align':'mid',             #--> place ticks in the middle
+            'histtype':'stepfilled',   #--> type
+            'color':'DarkBlue',        #--> linecolor
+            'linestyle':'--',
+            'linewidth':2,
+            'alpha':0.5,               #--> how strong the shading of the filling is
+            'edgecolor':'DarkBlue',
+            'facecolor':'LightBlue',   #--> color of the shading
+            },
+        'pie':{
+            'shadow':True,
+            'autopct':'%1.1f%%',
+            'radius':1.5,
+            'wedgeprops':{'width':0.75,'edgecolor':'w'}
+            },
         }
 
-# m_default_info_dict = {'xlabel':None,
-        # }
-        # 'pie':{'colors':None, 'autopct':'%1.1f%%','shadow':True},
-def my_plotter_2D(plot_name, ax, x_data, y_data, xlabel=None, ylabel=None,title=None, param_dict=None):
+def mplotter_2D(plot_name, ax, x_data, y_data, xlabel=None, ylabel=None,title=None, param_dict=None):
     """
         A helper function to make a graph
 
@@ -95,23 +125,57 @@ def my_plotter_2D(plot_name, ax, x_data, y_data, xlabel=None, ylabel=None,title=
     out = common_plots[plot_name](x_data, y_data, **param_dict)
 
     return out
-# 'pie':{'colors':None, 'autopct':'%1.1f%%','shadow':True},
 
-def my_pie(data, labels, colors,title):
-    fig, ax = plt.subplots()
+def mplot(x,y,yerr=None,xerr=None,style_dict=None):
+
+    if type(style_dict)==None:
+        style_dict=_default_style['plot']
+    ax.errorbar(x,y,yerr,xerr,**style_dict)
+
+    return
+
+def mpie(ax,data, labels, title, colors=None,style_dict=None):
+    if type(colors) == None:
+        colors = _default_cmap(np.arange(len(labels)))
+    if style_dict==None:
+        style_dict = _default_style['pie']
     out_pie = ax.pie(
-                    data,
-                    labels=labels,
-                    autopct='%1.1f%%',  # --Show percentaje
-                    shadow=True,
-                    colors=colors
+            data,
+            labels=labels,
+            colors=colors,
+            **style_dict
                     )
     ax.set(title=title)
 
     return out_pie
 
+def mhist(ax,x,label,bins=None,bin_num=None,style_dict=None):
+    """My default histogram"""
+    if type(bin_num)==None:
+        bin_num=10
+
+    if type(bins)==None:
+        max_bin = max(x)
+        min_bin = min(x)
+        step = (max_bin - min_bin)/bin_num
+        bins = np.arange(start=min_bin,stop=max_bin,step=int(step))
+
+    if style_dict==None:
+        style_dict = _default_style['hist']
+
+    # -- Build histogram
+    n,bins,patches = ax.hist(x=x,label=label,bins=bins,**style_dict)
+
+    # -- TODO: Add errorbar
+    ax.errorbar(bin_centers, entries, yerr=np.sqrt(entries), fmt='r.')
+
+    return n,bins,patches
+
+def plot_multiple():
+    pass
+
 # == Interactive Plots
-import altair as alt
+# import altair as alt
 
 
 # ===== ROOT ===== #
