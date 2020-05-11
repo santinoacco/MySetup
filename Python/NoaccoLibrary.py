@@ -49,10 +49,6 @@ def my_plt_style(plot_obj):
 
 _default_cmap = plt.get_cmap('tab20c')
 
-# def my_plotter_2D(ax, x_data, y_data,xlabel, ylabel, param_dict):
-m_default_param_dict = {
-        'hist':{}
-        }
 _default_style={
         'plot':{
             'marker':'o',
@@ -81,7 +77,7 @@ _default_style={
         'pie':{
             'shadow':True,
             'autopct':'%1.1f%%',
-            'radius':1.5,
+            'radius':1.0,
             'wedgeprops':{'width':0.75,'edgecolor':'w'}
             },
         }
@@ -126,13 +122,19 @@ def mplotter_2D(plot_name, ax, x_data, y_data, xlabel=None, ylabel=None,title=No
 
     return out
 
-def mplot(x,y,yerr=None,xerr=None,style_dict=None):
+def mplot(ax,x,y,label,yerr=np.nan,xerr=0,style_dict=None):
+    if style_dict==None:
+        style_dict = _default_style['plot']
+    out = ax.errorbar(
+            x=x,
+            y=y,
+            label=label,
+            yerr=yerr,
+            #xerr=xerr,
+            **style_dict,
+            )
 
-    if type(style_dict)==None:
-        style_dict=_default_style['plot']
-    ax.errorbar(x,y,yerr,xerr,**style_dict)
-
-    return
+    return out
 
 def mpie(ax,data, labels, title, colors=None,style_dict=None):
     if type(colors) == None:
@@ -149,7 +151,7 @@ def mpie(ax,data, labels, title, colors=None,style_dict=None):
 
     return out_pie
 
-def mhist(ax,x,label,bins=None,bin_num=None,style_dict=None):
+def mhist(ax,x,label,bins=None,bin_num=None,yerr=None,xerr=None,style_dict=None):
     """My default histogram"""
     if type(bin_num)==None:
         bin_num=10
@@ -164,12 +166,16 @@ def mhist(ax,x,label,bins=None,bin_num=None,style_dict=None):
         style_dict = _default_style['hist']
 
     # -- Build histogram
-    n,bins,patches = ax.hist(x=x,label=label,bins=bins,**style_dict)
+    entries,bins,patches = ax.hist(x=x,label=label,bins=bins,**style_dict)
 
-    # -- TODO: Add errorbar
-    ax.errorbar(bin_centers, entries, yerr=np.sqrt(entries), fmt='r.')
+    # -- Add errorbar
+    bin_centers = 0.5*(bins[:-1] + bins[1:])
+    ax.errorbar(
+            bin_centers, entries, yerr=yerr,xerr=xerr,
+            fmt='r.',label='Error bar')
 
-    return n,bins,patches
+
+    return entries,bins,patches
 
 def plot_multiple():
     pass
