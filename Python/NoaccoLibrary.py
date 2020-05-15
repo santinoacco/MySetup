@@ -68,7 +68,7 @@ _default_style={
             'align':'mid',             #--> place ticks in the middle
             'histtype':'stepfilled',   #--> type
             'color':'DarkBlue',        #--> linecolor
-            'linestyle':'--',
+            'linestyle':'-',
             'linewidth':2,
             'alpha':0.5,               #--> how strong the shading of the filling is
             'edgecolor':'DarkBlue',
@@ -172,7 +172,10 @@ def mhist(ax,x,label,bins=None,bin_num=None,yerr=None,xerr=None,style_dict=None)
     bin_centers = 0.5*(bins[:-1] + bins[1:])
     ax.errorbar(
             bin_centers, entries, yerr=yerr,xerr=xerr,
-            fmt='r.',label='Error bar')
+            label='Error bar',
+            fmt='r.',
+            ecolor='Orange',
+            )
 
 
     return entries,bins,patches
