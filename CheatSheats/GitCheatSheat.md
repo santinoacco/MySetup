@@ -19,7 +19,7 @@ git merge rama #local
 git push origin master #enviar a remoto (actualizar el master remoto)
 
 #eliminar rama:
-git branch --merged #checkear que converguiste bien
+git branch --merged #checkear que convergiste bien
 git branch -d #borra rama local
 git push origin --delete rama #borra rama remota.
 

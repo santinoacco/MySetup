@@ -4,7 +4,8 @@
 
 import numpy as np
 import pandas as pd
-#import ROOT as r
+import ROOT as r
+from array import array
 #import SwanImports
 
 
@@ -105,7 +106,8 @@ def mplotter_2D(plot_name, ax, x_data, y_data, xlabel=None, ylabel=None,title=No
             list of artists added
     """
     if param_dict == None:
-        param_dict = m_default_param_dict[plot_name]
+        # param_dict = m_default_param_dict[plot_name]
+        param_dict = _default_style[plot_name]
 
     common_plots = {
            'plot':ax.plot,
@@ -123,7 +125,7 @@ def mplotter_2D(plot_name, ax, x_data, y_data, xlabel=None, ylabel=None,title=No
     return out
 
 def mplot(ax,x,y,label,yerr=np.nan,xerr=0,style_dict=None):
-    if style_dict==None:
+    if style_dict is None:
         style_dict = _default_style['plot']
     out = ax.errorbar(
             x=x,
@@ -137,9 +139,9 @@ def mplot(ax,x,y,label,yerr=np.nan,xerr=0,style_dict=None):
     return out
 
 def mpie(ax,data, labels, title, colors=None,style_dict=None):
-    if type(colors) == None:
+    if colors is None:
         colors = _default_cmap(np.arange(len(labels)))
-    if style_dict==None:
+    if style_dict is None:
         style_dict = _default_style['pie']
     out_pie = ax.pie(
             data,
@@ -153,10 +155,12 @@ def mpie(ax,data, labels, title, colors=None,style_dict=None):
 
 def mhist(ax,x,label,bins=None,bin_num=None,yerr=None,xerr=None,style_dict=None):
     """My default histogram"""
-    if type(bin_num)==None:
+    if bin_num is None:
+    # if type(bin_num)==None:
         bin_num=10
 
-    if type(bins)==None:
+    if bins is None:
+    # if type(bins)==None:
         max_bin = max(x)
         min_bin = min(x)
         step = (max_bin - min_bin)/bin_num
@@ -188,6 +192,30 @@ def plot_multiple():
 
 
 # ===== ROOT ===== #
+def createT1(name, bins):
+    """
+
+    # Returns:
+        ROOT.TH1F histogram
+    """
+    binarray = array('d', bins)
+    h = r.TH1F(name,name,len(bins),bins[0],bins[-1])
+    h.SetBins(len(bins)-1, binarray)
+    return h
+
+def mROOT_style():
+    pass
+
+# IN PROGRESS:
+def mTplot(TObject):
+    # -- Different behaviour regarding number of TObjects passed
+    if len(TObject)>1: pass
+    TObject.SetLineColor(r.kBlue-3)
+    TObject.SetLineStyle()
+    TObject.SetTitle()
+    # TObject.Ge
+
+    return
 
 # ===== add to Excel ===== #
 def append_to_excel(dict_of_DF, file_to_write, sheetname, last_month_loaded):

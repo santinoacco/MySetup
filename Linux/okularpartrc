@@ -1,0 +1,17 @@
+[Dlg Accessibility]
+RecolorBackground=52,53,40
+RecolorForeground=238,240,191
+
+[Document]
+ChangeColors=true
+RenderMode=Recolor
+
+[Main View]
+ShowBottomBar=false
+SplitterSizes=218,1062
+
+[PageView]
+ShowScrollBars=false
+
+[Reviews]
+AnnotationTools=<tool id="1" name="Comments" type="highlight"><engine type="TextSelector" color="#ffffff00"><annotation opacity="0.65" type="Highlight" color="#ffffff00"/></engine><shortcut>1</shortcut></tool>,<tool id="2" name="Most Important" type="highlight"><engine type="TextSelector" color="#ff00ff00"><annotation opacity="0.65" type="Highlight" color="#ff00ff00"/></engine><shortcut>2</shortcut></tool>,<tool id="3" name="Hypothesis" type="highlight"><engine type="TextSelector" color="#ff5555ff"><annotation opacity="0.65" type="Highlight" color="#ff5555ff"/></engine><shortcut>3</shortcut></tool>,<tool id="4" name="Doubts" type="highlight"><engine type="TextSelector" color="#ffaa557f"><annotation opacity="0.65" type="Highlight" color="#ffaa557f"/></engine><shortcut>4</shortcut></tool>,<tool id="5" name="Error" type="highlight"><engine type="TextSelector" color="#ffff0000"><annotation opacity="0.65" type="Highlight" color="#ffff0000"/></engine><shortcut>5</shortcut></tool>,<tool id="6" name="Q&amp;A" type="note-linked"><engine hoverIcon="tool-note" type="PickPoint" color="#ffff5500"><annotation icon="Note" opacity="0.65" type="Text" color="#ffff5500"/></engine><shortcut>6</shortcut></tool>,<tool id="7" type="note-linked"><engine hoverIcon="tool-note" type="PickPoint" color="#ffffff00"><annotation icon="Note" type="Text" color="#ffffff00"/></engine><shortcut>7</shortcut></tool>,<tool id="8" type="note-inline"><engine hoverIcon="tool-note-inline" type="PickPoint" color="#ffffff00" block="true"><annotation type="FreeText" color="#ffffff00"/></engine><shortcut>8</shortcut></tool>,<tool id="9" type="ink"><engine type="SmoothLine" color="#ff00ff00"><annotation type="Ink" color="#ff00ff00" width="2"/></engine><shortcut>9</shortcut></tool>,<tool id="10" type="straight-line"><engine type="PolyLine" color="#ffffe000" points="2"><annotation type="Line" width="1" color="#ffffe000"/></engine></tool>,<tool id="11" type="polygon"><engine type="PolyLine" color="#ff007eee" points="-1"><annotation type="Line" width="1" color="#ff007eee"/></engine></tool>,<tool id="12" type="stamp"><engine hoverIcon="okular" type="PickPoint" size="64" block="true"><annotation icon="okular" type="Stamp"/></engine></tool>,<tool id="13" type="underline"><engine type="TextSelector" color="#ff000000"><annotation type="Underline" color="#ff000000"/></engine></tool>,<tool id="14" type="ellipse"><engine type="PickPoint" color="#ff00ffff" block="true"><annotation type="GeomCircle" width="5" color="#ff00ffff"/></engine></tool>,<tool id="15" type="typewriter"><engine type="PickPoint" block="true"><annotation type="Typewriter" textColor="#ff000000" color="#00ffffff" width="0"/></engine></tool>
