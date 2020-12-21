@@ -25,3 +25,6 @@ git push origin --delete rama #borra rama remota.
 
 # Para ver los commits:
 git log
+
+# Para actualizar upstream de un fork
+git pull <upstream_url> <branch>

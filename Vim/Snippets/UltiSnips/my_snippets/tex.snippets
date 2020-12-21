@@ -7,6 +7,15 @@ snippet default_pkgs
 \\usepackage{caption}
 \\usepackage{subcaption}
 % -- math
+\usepackage{amsmath}
+% -- cross-referencing
+\\usepackage{hyperref}					
+\\hypersetup{%
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=magenta,      
+	urlcolor=cyan,
+}
 endsnippet
 # Environments
 #  -- Figures
@@ -14,13 +23,14 @@ snippet _fig
 \\begin{figure}[h!]
 	\\centering
 	\\includegraphics[width = ${1:{VISUAL}}\textwidth]{${0:{path to image}}}
-	\\caption{
-		\\textit{
+	\\caption{%
+		\\textit{%
 		${3}
 		}
 	}
 	\\label{fig:${2}}
 \\end{figure}
+${4}
 endsnippet
 snippet _twofig
 \\begin{figure}[h!]
@@ -28,31 +38,38 @@ snippet _twofig
 	\\begin{subfigure}[b]{${1:{VISUAL}}\textwidth}
 		\\centering
 		\\includegraphics[width=\textwidth]{${0:{path to image}}}
-		\\caption{
-			\\textit{
-			${3}
-			}
-		}
-		\\label{fig:${2}}
+		\\caption{~}
+		\\label{subfig:${2}}
 	\\end{subfigure}
 	\\hfill
-	\\begin{subfigure}[b]{${1:{VISUAL}}\textwidth}
+	\\begin{subfigure}[b]{$1}\textwidth}
 		\\centering
-		\\includegraphics[width=\textwidth]{${4:{path to image}}}
-		\\caption{
-			\\textit{
-			${7}
-			}
-		}
-		\\label{fig:${6}}
+		\\includegraphics[width=\textwidth]{${3:{path to image}}}
+		\\caption{~}
+		\\label{subfig:${4}}
 	\\end{subfigure}
-	\\caption{
-			\\textit{
-			${8}
+	\\caption{%
+			\\textit{%
+			${5}
 			}
-	\\label{fig:${9}}
+	\\label{fig:${6}}
 	}
 \\end{figure}
+endsnippet
+snippet addsubfig
+	\\begin{subfigure}[b]{${1:{VISUAL}}\textwidth}
+		\\centering
+		\\includegraphics[width=\textwidth]{${0:{path to image}}}
+		\\caption{~}
+		\\label{subfig:${2}}
+	\\end{subfigure}
+endsnippet
+#  -- Align(ed)
+snippet ali "align(ed) environment" 
+\\begin{align${1:ed}}
+	\\label{eq:${2}}
+	${0:${VISUAL}}
+\\end{align$1}
 endsnippet
 #  -- Equation
 snippet _eql "Labeled equation environment" 
@@ -64,17 +81,20 @@ endsnippet
 #  -- Enumerate
 snippet _enum "enumerate environment" 
 \\begin{enumerate}
-	\\item ${0}
+	\\item 
+		${0}
 \\end{enumerate}
 endsnippet
 #  -- Itemize
 snippet _item "itemize environment"
 \\begin{itemize}
-	\\item ${0}
+	\\item 
+		${0}
 \\end{itemize}
 endsnippet
 snippet it "\item"
-\\item ${1:${VISUAL}}
+\\item 
+	${1:${VISUAL}}
 endsnippet
 #  -- Chapter
 snippet _cha "\chapter" 
@@ -225,7 +245,7 @@ snippet begin "\begin{} ... \end{} block"
 endsnippet
 
 # Tabular
-snippet tab tabular (or arbitrary) environment
+snippet tab "tabular (or arbitrary) environment"
 \\begin{${1:tabular}}{${2:c}}
 	${0:${VISUAL}}
 \\end{$1}
@@ -239,13 +259,6 @@ snippet center "center environment"
 \\begin{center}
 	${0:${VISUAL}}
 \\end{center}
-endsnippet
-# Align(ed)
-snippet ali "align(ed) environment" 
-\\begin{align${1:ed}}
-	\\label{eq:${2}}
-	${0:${VISUAL}}
-\\end{align$1}
 endsnippet
 # Gather(ed)
 snippet gat "gather(ed) environment"
@@ -442,7 +455,7 @@ snippet tikz "figure environment (tikzpicture)"
 	${2}
 \\end{tikzpicture}
 \\end{center}
-\\caption{${3}}%
+\\caption{${3}}
 \\label{fig:${4}}
 \\end{figure}
 ${0}
