@@ -1,4 +1,4 @@
-snippet header standard Vim script file header
+snippet header "standard Vim script file header"
 	" File: ${1:`expand('%:t')`}
 	" Author: ${2:`g:snips_author`}
 	" Description: ${3}
@@ -9,7 +9,7 @@ snippet guard script reload guard
 	endif
 	let $1 = 1${0}
 endsnippet
-snippet f function
+snippet f "function"
 	fun! ${1:`expand('%') =~ 'autoload' ? substitute(matchstr(expand('%:p'),'autoload/\zs.*\ze.vim'),'[/\\]','#','g').'#' : ''`}${2:function_name}(${3})
 		${0}
 	endf

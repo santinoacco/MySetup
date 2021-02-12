@@ -35,7 +35,17 @@ snippet rootimport
 import ROOT as r
 import SwanImports
 endsnippet
+snippet analyimport
+from scipy.optimize import curve_fit
+#from iminuit import
+endsnippet
 # Module Docstring
+snippet todo "comment on TODO" b
+#   TODO: ${1:desc} - `!v strftime("%c")`
+endsnippet
+snippet note "NOTE" b
+#   NOTE: ${1:desc}   
+endsnippet
 snippet docs
 """
 File: ${1:`vim_snippets#Filename('$1.py', 'foo.py')`}
@@ -168,13 +178,26 @@ snippet axlabels
 ax.set_xlabel(${0})
 ax.set_ylabel(${1})
 endsnippet
+snippet add_histo "Loads my default Python 1D Histogram Non Interactive"
+endsnippet
+snippet add_dinamichisto "Loads my default Python 1D Histogram Interactive"
+endsnippet
 
 #****** PyROOT *****#
 snippet Tloadfiles "load files in TChain, requieres configparse" 
-data = r.TChain('${0:VISUAL}')
-data.Add(args.Input)
+ch = r.TChain('${0:VISUAL}')
+ch.Add(args.Input)
+data = r.xAOD.MakeTransientTree(ch)
 ${1}
 endsnippet
+snippet TloopEvs "" b
+Events = data.GetEntries()
+if verbose: print(f"Input has {Events} total entries")
+endsnippet
+snippet _TH1F "TH1F template" b
+h_${1} = r.TH1F('$1','$1',${2:nbins},${3:min_bin},${4:max_bin})
+endsnippet
+
 
 #*************************************************************#
 #************************ LESS USEFUL ************************#

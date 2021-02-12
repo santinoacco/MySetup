@@ -1,0 +1,7 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =5
+let g:netrw_dirhist_5='/home/santi_noacco/.config/nvim'
+let g:netrw_dirhist_4='/home/santi_noacco/.config/fish'
+let g:netrw_dirhist_3='/home/santi_noacco/.config/vim/.vim'
+let g:netrw_dirhist_2='/home/santi_noacco/.config/vim/.vim/dirs'
+let g:netrw_dirhist_1='/home/santi_noacco/.config/vim/'
