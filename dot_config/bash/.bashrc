@@ -119,7 +119,7 @@ alias np='nano -w PKGBUILD'
 alias more=less
 alias lS='ls -lAsh'
 alias cD='cd ~/Desktop'
-alias lx='ssh snoaccor@lxplus.cern.ch'  # init session at lxplus
+alias lx='ssh -X snoaccor@lxplus.cern.ch'  # init session at lxplus
 
 xhost +local:root > /dev/null 2>&1
 

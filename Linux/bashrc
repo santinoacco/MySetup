@@ -107,8 +107,9 @@ alias df='df -h'                        # human-readable sizes
 alias free='free -m'                    # show sizes in MB
 alias np='nano -w PKGBUILD'
 alias more=less
-alias lS='ls -las'
+alias lS='ls -lah'
 alias cD='cd ~/Desktop'
+alias ssh='ssh -Y'                      
 alias lx='ssh snoaccor@lxplus.cern.ch'  # init session at lxplus
 
 xhost +local:root > /dev/null 2>&1
