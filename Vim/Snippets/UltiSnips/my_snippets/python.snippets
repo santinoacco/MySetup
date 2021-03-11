@@ -184,6 +184,9 @@ snippet add_dinamichisto "Loads my default Python 1D Histogram Interactive"
 endsnippet
 
 #****** PyROOT *****#
+snippet ini_xaod "in a lxplus env, sets to load xAOD"
+r.xAOD.Init().ignore()
+endsnippet
 snippet Tloadfiles "load files in TChain, requieres configparse" 
 ch = r.TChain('${0:VISUAL}')
 ch.Add(args.Input)
