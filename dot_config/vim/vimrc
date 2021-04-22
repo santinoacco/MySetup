@@ -402,8 +402,6 @@ end
 " Deoplete -----------------------------
     " -Use deoplete.
     let g:deoplete#enable_at_startup = 1
-    let g:deoplete#enable_ignore_case = 1
-    let g:deoplete#enable_smart_case = 1
     " -Complete with words from any opened file
     let g:context_filetype#same_filetypes = {}
     let g:context_filetype#same_filetypes._ = '_'
@@ -469,6 +467,7 @@ end
     let g:UltiSnipsJumpForwardTrigger="<c-b>"
     let g:UltiSnipsJumpBackwardTrigger="<c-z>"
     let g:UltiSnipsSnippetDirectories=["UltiSnips", "$HOME/.config/nvim/my_snippets"]
+    let g:UltiSnipsSnippetDirectories=["UltiSnips", "my_snippets"]
 
 " Custom configurations ----------------
     " Include user's custom nvim configurations
