@@ -89,6 +89,7 @@
     Plug 'fisadev/FixedTaskList.vim'                    
 
 " -Async autocompletion
+    " -- Deoplete:: https://github.com/Shougo/deoplete.nvim
     if using_neovim && vim_plug_just_installed
         Plug 'Shougo/deoplete.nvim', {'do': ':autocmd VimEnter * UpdateRemotePlugins'}
     else
@@ -96,9 +97,10 @@
         Plug 'roxma/nvim-yarp'
         Plug 'roxma/vim-hug-neovim-rpc'
     endif
-
 " -Python autocompletion
     Plug 'deoplete-plugins/deoplete-jedi'
+    " update every so often `pynvim`
+    " pip3 install --user --upgrade pynvim
 
 " -Automatically close parenthesis, etc
     Plug 'Townk/vim-autoclose'
@@ -106,11 +108,13 @@
 " -Automatically sort python imports
     Plug 'fisadev/vim-isort'
 
-" -Snippets manager (SnipMate), dependencies, and snippets repo
-    Plug 'MarcWeber/vim-addon-mw-utils'
-    Plug 'tomtom/tlib_vim'
-    Plug 'honza/vim-snippets'
-    Plug 'garbas/vim-snipmate'
+" -Snippets manager (UltiSnips), dependencies, and snippets repo
+    Plug 'SirVer/ultisnips'
+"" -Snippets manager (SnipMate), dependencies, and snippets repo
+    "Plug 'MarcWeber/vim-addon-mw-utils'
+    "Plug 'tomtom/tlib_vim'
+    "Plug 'honza/vim-snippets'
+    "Plug 'garbas/vim-snipmate'
 
 " -Python and other languages code checker
     Plug 'scrooloose/syntastic'
@@ -318,23 +322,21 @@ end
 " ----> Mappings
 
 " -Hybrid line numbers on/off
-    nmap<silent> ,nu :set nu rnu<CR>
-    nmap<silent> ,nnu :set nonu nornu<CR>
-
-" -Mapping for spelling mistake
+    nnoremap<silent> <leader>nu :setlocal nu! rnu!<CR>
+" -Spelling mistake
     "  -- spanish
-    nmap sples :set spell spelllang=es<CR>
+    nnoremap<silent> <leader>es :set spell! spelllang=es<CR>
     "  -- english
-    nmap splen :set spell spelllang=en_us<CR>
-    "  -- exit
-    nmap qspl :set nospell<CR>
+    nnoremap<silent> <leader>en :set spell! spelllang=en_us<CR>
 
 " -Mapping Paste Mode on/off
     nmap <F5> :set paste<CR><ESC>
     nmap <F5> :set nopaste<CR><ESC> 
-""" simple recursive grep (requires Ack installed)
-""    nmap ,r :Ack 
-""    nmap ,wr :Ack <cword><CR>
+" -Make adjusing split sizes a bit more friendly
+    noremap <silent> <C-Left> :vertical resize -3<CR>
+    noremap <silent> <C-Right> :vertical resize +3<CR>
+    noremap <silent> <C-Up> :resize +3<CR>
+    noremap <silent> <C-Down> :resize -3<CR>
 
 """ -Tab navigation mappings
 ""    map tn :tabn<CR>
@@ -359,13 +361,6 @@ end
 
 
 " ----> Plugins settings and mappings
-
-" *Tagbar* ----------------------------- 
-    " toggle tagbar display
-    map <F4> :TagbarToggle<CR>
-
-    " autofocus on tagbar open
-    let g:tagbar_autofocus = 1
 
 " NERDTree ----------------------------- 
     " toggle nerdtree display
@@ -409,7 +404,6 @@ end
     let g:deoplete#enable_at_startup = 1
     let g:deoplete#enable_ignore_case = 1
     let g:deoplete#enable_smart_case = 1
-    
     " -Complete with words from any opened file
     let g:context_filetype#same_filetypes = {}
     let g:context_filetype#same_filetypes._ = '_'
@@ -429,7 +423,6 @@ end
     "let g:syntastic_warning_symbol = '⚠'
     "let g:syntastic_style_error_symbol = '✗'
     "let g:syntastic_style_warning_symbol = '⚠'
-
 
 " Autoclose ------------------------------
     " Fix to let ESC work as espected with Autoclose plugin
@@ -465,12 +458,17 @@ end
     let g:airline_powerline_fonts = 0
     let g:airline_theme = 'bubblegum'
     let g:airline#extensions#whitespace#enabled = 0
-
-" Airline ------------------------------
+" VimWiki ------------------------------
     let g:vimwiki_list = [{'path': '~/vimwiki/',
                           \ 'syntax': 'markdown', 'ext': '.md'}]
 " Snippets engine
-"ActivateAddons vim-snippets UltiSnips
+""ActivateAddons vim-snippets SnipMate/
+    "let g:snipMate = { 'snippet_version' : 1 }
+" Snippets engine (UltiSnips) ------------------------------
+    let g:UltiSnipsExpandTrigger="<tab>"
+    let g:UltiSnipsJumpForwardTrigger="<c-b>"
+    let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+    let g:UltiSnipsSnippetDirectories=["UltiSnips", "$HOME/.config/nvim/my_snippets"]
 
 " Custom configurations ----------------
     " Include user's custom nvim configurations

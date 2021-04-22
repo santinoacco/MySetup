@@ -5,11 +5,12 @@ set PATH usr/local/bin /usr/sbin $PATH
 set -gx EDITOR nvim
 #set -U VISUAL nvim
 set -U READER okular
-set -U TERMINAL alacritty
+set -U TERMINAL xfce4-terminal #alacritty
 #set -U BROWSER chromium 
 set -U BROWSER firefox 
 #set -Ux $XDG_CACHE_HOME .cache
 #set -Ux $XDG_CONFIG_HOME .config
+# (Un)comment to change where to look for .vimrc
 set -x VIMINIT 'let $MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc" | source $MYVIMRC'
 
 
@@ -29,11 +30,6 @@ end
 function vidx
     v ~/VimWiki/index.md
 end
-
-#function vim
-#    nvim $argv
-#end
-
 
 
 # -- Abrebiations --
