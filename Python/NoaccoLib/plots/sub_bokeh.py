@@ -26,7 +26,6 @@ class Compound_plots(object):
         return fig_arr
 
 
-
 class TwoOnCol(Compound_plots):
 
     @property
@@ -96,3 +95,49 @@ fig_bottom.yaxis[0].axis_label = 'Volume'
 
 # -- Show them together
 show(column(fig_top,fig_bottom))
+
+
+# moved from NoaccoLibrary.
+from bokeh.io import output_notebook, show
+from bokeh.plotting import figure
+from bokeh.models import LinearAxis, DatetimeTickFormatter
+# output_notebook()
+def initBokeh(h,w,xlabel,ylabel):
+    """
+    Description
+
+    # Args::
+        h: plots height
+        w: plots width
+
+    # Returns::
+        fig: bokeh.plotting.figure obj.
+    """
+    fig = figure(
+            title=title,
+            plot_height=h,
+            plot_width=w,
+            )
+    # -- Set axes
+    # -- Add "above" and "right" axes
+    fig.add_layout(LinearAxis(axis_label=None),"above")
+    fig.add_layout(LinearAxis(axis_label=None),"right")
+    # -- Configure X-axis
+    fig.xaxis[1].axis_label = xlabel
+    # -- Configure Y-axis
+    fig.yaxis[0].axis_label = ylabel
+
+    # -- Add Line
+    fig.line(x,y,
+            line_dash='dotted',
+            line_color='black'
+            )
+    # -- Add Scatter
+    fig.circle(x,y,
+            fill_color='white',
+            size=5
+            )
+
+
+    return fig
+
