@@ -3,7 +3,7 @@
 SETUVAR BROWSER:firefox
 SETUVAR EDITOR:nvim
 SETUVAR READER:okular
-SETUVAR TERMINAL:xfce4\x2dterminal
+SETUVAR TERMINAL:alacritty
 SETUVAR USER:S_noacco
 SETUVAR VISUAL:nvim
 SETUVAR XDG_CACHE_HOME:\x2ecache
@@ -20,7 +20,7 @@ SETUVAR _fish_abbr_gs:git\x20status
 SETUVAR _fish_abbr_pacS:sudo\x20pacman\x20\x2dSyu
 SETUVAR _fish_abbr_tar:tar\x20cvzf
 SETUVAR _fish_abbr_untar:tar\x20\x2dxvf
-SETUVAR _fish_abbr_unzip:z7\x20e
+SETUVAR _fish_abbr_unzip:7z\x20e
 SETUVAR _fish_abbr_work:cd\x20/home/santi_noacco/Desktop/WorkingFolder
 SETUVAR fish_color_autosuggestion:555\x1ebrblack
 SETUVAR fish_color_cancel:\x2dr

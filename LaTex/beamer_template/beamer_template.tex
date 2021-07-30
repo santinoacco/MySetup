@@ -1,0 +1,2242 @@
+% Latex template: mahmoud.s.fahmy@students.kasralainy.edu.eg
+% For more details: https://www.sharelatex.com/learn/Beamer
+
+%\documentclass[8pt]{beamer}					% Document class
+%\documentclass[aspectratio=169,8pt]{beamer}					% Document class
+\documentclass[aspectratio=1610,8pt]{beamer}					% Document class
+
+% ==== PACKAGES ==== %
+\usepackage[english]{babel}				% Set language
+\usepackage[utf8x]{inputenc}			% Set encoding
+\usepackage[T1]{fontenc}
+%\usepackage{tgbonum}
+
+%\usepackage{fontspec}
+%\setmainfot{Sanz}
+
+\mode<presentation>						% Set options
+{%
+    % -- Set theme
+    %\usetheme{default}					
+    \usetheme{Singapore}					% Set theme
+    %\usetheme[progressbar=frametitle]{Singapore}					% Set theme
+    %\usetheme{Boadilla}					% Set theme
+    % -- Set colors
+    %\usecolortheme{default} 				
+    \usecolortheme{rose} 				% Set colors
+    % --  Set font theme
+    %\usefonttheme{structureitalicserif}  				
+    %\usefonttheme{structuresmallcapsserif}  				% Set font theme
+    \usefonttheme{serif}  				% Set font theme
+    \setbeamertemplate{caption}[numbered]	% Set caption to be numbered
+    \setbeamertemplate{footline}[frame number]
+}
+
+% Uncomment this to have the outline at the beginning of each section highlighted.
+%\AtBeginSection[]
+%{
+%  \begin{frame}{Outline}
+%    \tableofcontents[currentsection]
+%  \end{frame}
+%}
+\usepackage[export]{adjustbox}
+% -- For including figures
+\usepackage{graphicx}					
+% -- For table rules
+\usepackage{booktabs}					
+% -- For cross-referencing
+\usepackage{hyperref}					
+\hypersetup{%
+    colorlinks=true,
+    linkcolor=blue,
+    %filecolor=magenta,      
+    filecolor=grey,      
+    urlcolor=cyan,
+}
+% -- To Add code
+\usepackage{verbatim}
+\usepackage{listings}
+% -- For math eq
+\usepackage{amsmath}
+% -- Subfigures
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{eso-pic}
+%\newcommand\AtPagemyUpperLeft[1]{\AtPageLowerLeft{%
+%\put(\LenToUnit{0.9\paperwidth},\LenToUnit{0.9\paperheight}){#1}}}
+
+\title{%
+    Performance of photon triggers defined in the Run-3 Menu.
+    %CNN for photon ID at HLT
+    %Qualification Task Update \\
+    %\small{subtitle}
+}
+\author{\underline{S.~Noacco~Rosende}, F.~Monticelli}
+%\author[Noacco, Monticelli]{S.~Noacco~Rosende\inst{1}, F.~Monticelli\inst{1}}
+\institute[VFU]{%
+    \inst{1}
+    Instituto de F\'isica La Plata (CONICET-UNLP) \\
+    \includegraphics[height=1cm,width=.8cm,keepaspectratio]{images/iflp_logo.png}
+    \and
+    \inst{2}
+    Universidad Nacional de La Plata \\
+    \includegraphics[height=1cm,width=2cm,keepaspectratio]{images/unlp_logo.png}
+    %\includegraphics[height=1cm,width=.8cm,keepaspectratio]{images/iflp_logo.png}
+}				
+\date{\today}									% Today's date	
+
+% -- Put logos on top right
+\usepackage{textpos}
+\addtobeamertemplate{frametitle}{}{%
+    \begin{textblock*}{100mm}(.9\textwidth,-.8cm)
+    \includegraphics[height=.7cm,width=2cm,keepaspectratio]{images/unlp_logo.png}
+    \end{textblock*}
+    \begin{textblock*}{100mm}(.8\textwidth,-.75cm)
+    \includegraphics[height=.8cm,width=.8cm,keepaspectratio]{images/iflp_logo.png}
+    \end{textblock*}
+}
+%\logo{%
+    %\includegraphics[height=0.5cm]{images/unlp_logo.png}
+    %\includegraphics[height=0.5cm]{images/iflp_logo.png}
+%}
+
+\begin{document}
+%  -- Title page
+\begin{frame}
+  \titlepage
+\end{frame}
+
+% -- Outline
+% This page includes the outline (Table of content) of the presentation.
+% All sections and subsections will appear in the outline by default.
+%\begin{frame}{Outline}
+  %\tableofcontents
+%\end{frame}
+
+\section{Introduction}
+\begin{frame}{Context}
+    \begin{block}{QualificationTask resume}
+        \textit{%
+            This qualification task aims to setup and measure the performance of photon triggers defined in the Run-3 Menu.
+            The work will include use the Offline monitoring framework to measure the efficiencies w.r.t.\ offline identification,
+            modify, fix and maintain its configuration if needed,
+            %and use official Z-radiative decay framework.
+            \\
+            In this task,
+            \textbf{performance of Run-3 photon chains will be compared with results from Run 2}.
+            In addition, the performance of alternative selections if/when available 
+            (such as NN based identification at fast reconstruction level) will be evaluated.
+            }
+    \end{block}
+    
+    \begin{block}{Previously}
+        \begin{itemize}
+            \item [-]
+                I showed a comparison between Run3 triggers on a Signal sample and Run2 triggers on an Enhanced Bias sample.
+            \item [-]
+                I showed Run3 triggers Efficiencies and Resolutions at HLT level.
+        \end{itemize}
+    \end{block}
+
+    \begin{block}{Todays topic}
+        I will compare the Efficiencies (at every step) and Resolutions (at HLT) between the triggers defined in Run2 against those of Run3 using the TrigMonitoring Tool,
+        for Signal samples.
+        \begin{itemize}
+        \item[-]
+            Signal (\textbf{HGam}) sample for Run2 data: \
+            \texttt{\tiny{mc16\_13TeV.345306.PowhegHerwig7EvtGen\_NNLOPS\_nnlo\_30\_ggH125\_gamgam.merge.AOD.e5853\_e5984\_s3126\_r10724\_r10726}}
+        \item[-]
+            Signal (\textbf{HGam}) samples from the \href{https://its.cern.ch/jira/browse/ATR-22875}{11th ATHENA validation sampleA} for Run3.
+            \begin{itemize}
+            \item[o]
+                with pileup: \ 
+                \texttt{\tiny{user.okumura.val.run3DQ.343981.e5607\_e5984\_s3126\_d1616\_r12400\_tid24243105\_00.p1\_v3\_EXT0}} \
+            \item[o]
+                and without pileup: \ 
+                \texttt{\tiny{user.okumura.val.run3DQ.343981.e5607\_e5984\_s3126f\_d1617\_r12400\_tid24243116\_00.p1\_v3\_EXT0}} \
+            \end{itemize}
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+%\begin{frame}{Package Overview}
+    %\begin{block}{~}
+        %For this QT I developed a SWAN package \textit{TriggerMonitoring~Visualization~Tool} (TMVT) to help visualize,
+    %analize and debug the photon trigger performance from the output of the \textit{TrigMonitoring Tool} \texttt{Run3DQTestingDriver}.
+    %The TMVT can be found in GitLab \href{https://gitlab.cern.ch/snoaccor/triggerMonitoring_visualizationTool}{here} is powered by Python and many \href{https://github.com/scikit-hep}{Scikit-HEP Tools}.
+    %\end{block}
+    %Some of its perks are:
+    %\begin{itemize}
+        %\begin{columns}
+        %\column{0.3\textwidth}
+        %\item \textit{\textcolor{blue}{Interactive search}} \\
+            %Much like a \texttt{TBrowser} object to scope through your file trying to figure out the dir structure or the name of your relevant variables,
+            %the \texttt{IO.explore\_Tfile} method interactively goes through the ROOT file until you find a \texttt{TH1F} o\texttt{TProfile} object.
+        %\column{0.7\textwidth}
+        %\begin{figure}[h!]
+            %\includegraphics[width=.7\textwidth]{../TrigMonitoring/images/SshotExploreTFileInteractive.png}
+        %\end{figure}
+        %\end{columns}
+    %\end{itemize}
+%\end{frame}
+
+%\begin{frame}{Package Overview}
+    %\begin{block}{~}
+    %The following results were computed using the \textit{TrigMonitoring Tool} \texttt{Run3DQTestingDriver} and plotted using the \textit{TriggerMonitoring~Visualization~Tool} which can be found in GitLab \href{https://gitlab.cern.ch/snoaccor/triggerMonitoring_visualizationTool}{here.}
+    %Powered by Python and many \href{https://github.com/scikit-hep}{Scikit-HEP Tools},
+    %this SWAN package is aimed to help visualize and debug the performance of the TrigMonitoring Tool.
+    %\end{block}
+    %Some of its perks are:
+    %\begin{itemize}
+        %\begin{columns}
+        %\column{0.3\textwidth}
+        %\item \textit{\textcolor{blue}{Show empties}} \\
+            %It is straight forward to filter the desired objects,
+            %as well as checking which of those are empty.
+        %\column{0.7\textwidth}
+        %\begin{figure}[h!]
+            %\includegraphics[width=.6\textwidth]{../TrigMonitoring/images/SshotShowEmpties.png}
+            %%\includegraphics[width=6cm,height=6cm]{../TrigMonitoring/images/SshotShowEmpties.png}
+        %\end{figure}
+        %\end{columns}
+    %\end{itemize}
+%\end{frame}
+
+%\begin{frame}{Package Overview}
+    %\begin{block}{~}
+    %The following results were computed using the \textit{TrigMonitoring Tool} \texttt{Run3DQTestingDriver} and plotted using the \textit{TriggerMonitoring~Visualization~Tool} which can be found in GitLab \href{https://gitlab.cern.ch/snoaccor/triggerMonitoring_visualizationTool}{here.}
+    %Powered by Python and many \href{https://github.com/scikit-hep}{Scikit-HEP Tools},
+    %this SWAN package is aimed to help visualize and debug the performance of the TrigMonitoring Tool.
+    %\end{block}
+    %Some of its perks are:
+    %\begin{itemize}
+        %\begin{columns}
+        %\column{0.2\textwidth}
+        %\item \textit{\textcolor{blue}{All at a glance}} \\
+            %Finally if one wants to check what is inside some specific directory,
+            %it is easy to plot everything by just defining a filter and using the \texttt{plotter.show\_histos} method
+        %\column{0.8\textwidth}
+        %\begin{figure}[h!]
+            %%\includegraphics[width=6cm,height=5cm,keepaspectratio]{../TrigMonitoring/images/SshotPlotAll.png}
+            %\includegraphics[width=6cm,height=5cm]{../TrigMonitoring/images/SshotPlotAll.png}
+        %\end{figure}
+        %\end{columns}
+    %\end{itemize}
+%\end{frame}
+
+%\begin{frame}{Results Overview}
+    %In the following slides,
+    %the folowing results will be shown.
+    %All plots shown using TMVT.
+    %\begin{itemize}
+        %\item $npvtx$ distributions
+        %\begin{itemize}
+            %\item[-]
+                %g20: Loose, Medium, Tight, Tight ICaloLoose, Tight ICaloMedium
+            %\item[-]
+                %g22: Tight
+            %\item[-]
+                %g25: Loose, Medium, Tight
+            %\item[-]
+                %g120: Loose
+            %\item[-]
+                %g140: Loose
+        %\end{itemize}
+        %\item Run2 vs Run3
+        %\begin{itemize}
+            %\item[-]
+                %g120 Loose WP
+            %\item[-]
+                %g20 Tight ICaloLoose WP
+            %\item[-]
+                %g25 Medium WP
+        %\end{itemize}
+        %\item Run3 efficiencies
+        %\begin{itemize}
+            %\item[-]
+                %g20: Loose, Medium, Tight, Tight ICaloLoose, Tight ICaloMedium
+            %\item[-]
+                %g22: Tight
+            %\item[-]
+                %g25: Loose, Medium, Tight
+            %\item[-]
+                %g120: Loose
+        %\end{itemize}
+        %\item Run3 resolutions
+        %\begin{itemize}
+            %\item [-]
+                %Eratio
+            %\item [-]
+                %Reta
+            %\item [-]
+                %ethad
+            %\item [-]
+                %eta
+            %\item [-]
+                %Rhad
+        %\end{itemize}
+    %\end{itemize}
+%\end{frame}
+
+%\begin{frame}{Samples number of primary vertex distributions}
+%\framesubtitle{g140}
+    %\begin{figure}[h!]
+        %\centering
+        %\begin{subfigure}[b]{.45\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Dist_Run3 No PileUp_g140*VH_npvtx.png}
+            %\caption{~}
+        %\end{subfigure}
+        %\hfill
+        %\begin{subfigure}[b]{.45\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Dist_Run3 With PileUp_g140*VH_npvtx.png}
+            %\caption{~}
+        %\end{subfigure}
+        %\hfill
+    %\end{figure}
+%\end{frame}
+
+%\begin{frame}{Samples number of primary vertex distributions}
+%\framesubtitle{g120}
+    %\begin{figure}[h!]
+        %\centering
+        %\begin{subfigure}[b]{.45\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Dist_Run3 No PileUp_g120*VHI_npvtx.png}
+            %\caption{~}
+        %\end{subfigure}
+        %\hfill
+        %\begin{subfigure}[b]{.45\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Dist_Run3 With PileUp_g120*VHI_npvtx.png}
+            %\caption{~}
+        %\end{subfigure}
+        %\hfill
+    %\end{figure}
+%\end{frame}
+
+%\begin{frame}{Samples number of primary vertex distributions}
+%\framesubtitle{g25}
+    %\begin{figure}[h!]
+        %\centering
+        %\begin{subfigure}[b]{.45\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Dist_Run3 No PileUp_g25*VH_npvtx.png}
+            %\caption{~}
+        %\end{subfigure}
+        %\hfill
+        %\begin{subfigure}[b]{.45\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Dist_Run3 With PileUp_g25*VH_npvtx.png}
+            %\caption{~}
+        %\end{subfigure}
+        %\hfill
+    %\end{figure}
+%\end{frame}
+
+%\begin{frame}{Samples number of primary vertex distributions}
+%\framesubtitle{g22}
+    %\begin{figure}[h!]
+        %\centering
+        %\begin{subfigure}[b]{.45\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Dist_Run3 No PileUp_g22*VH_npvtx.png}
+            %\caption{~}
+        %\end{subfigure}
+        %\hfill
+        %\begin{subfigure}[b]{.45\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Dist_Run3 With PileUp_g22*VH_npvtx.png}
+            %\caption{~}
+        %\end{subfigure}
+        %\hfill
+    %\end{figure}
+%\end{frame}
+
+%\begin{frame}{Samples number of primary vertex distributions}
+%\framesubtitle{g20}
+    %\begin{figure}[h!]
+        %\centering
+        %\begin{subfigure}[b]{.45\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Dist_Run3 No PileUp_g20*VH_npvtx.png}
+            %\caption{~}
+        %\end{subfigure}
+        %\hfill
+        %\begin{subfigure}[b]{.45\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Dist_Run3 With PileUp_g20*VH_npvtx.png}
+            %\caption{~}
+        %\end{subfigure}
+        %\hfill
+        %\begin{subfigure}[b]{.45\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Dist_Run3 No PileUp_g20*VHI_npvtx.png}
+            %\caption{~}
+        %\end{subfigure}
+        %\hfill
+        %\begin{subfigure}[b]{.45\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Dist_Run3 With PileUp_g20*VHI_npvtx.png}
+            %\caption{~}
+        %\end{subfigure}
+        %\hfill
+    %\end{figure}
+%\end{frame}
+\section{Efficiencies}
+\subsection{g20}
+\begin{frame}{Run2 vs Run3 Trigger Efficiencies}
+    Comparison between Run2 and Run3 triggers efficiencies for g20\_tight\_icaloloose\_L1M15VHI trigger at all levels in $\eta$.
+    \begin{columns}
+        %\column{width=9}
+        \column{0.8\textwidth}
+        %\hspace{-1}
+        \begin{figure}[h!]
+            \begin{subfigure}[b]{0.45\textwidth}
+                \centering
+                \includegraphics[width=0.9\linewidth]{../TrigMonitoring/images/outputs/Run2vsRun3/L1Calo_Eff_g20tighticaloloose_eta.png}
+                %\includegraphics[width=5.5cm,height=4cm]{../TrigMonitoring/images/outputs/Run2vsRun3/L1Calo_Eff_g20tighticaloloose_eta.png}
+                \caption{~}
+            \end{subfigure}
+            \begin{subfigure}[b]{0.45\textwidth}
+                \centering
+                \includegraphics[width=0.9\linewidth]{../TrigMonitoring/images/outputs/Run2vsRun3/EFCalo_Eff_g20tighticaloloose_eta.png}
+                %\includegraphics[width=5.5cm,height=4cm]{../TrigMonitoring/images/outputs/Run2vsRun3/EFCalo_Eff_g20tighticaloloose_eta.png}
+                \caption{~}
+            \end{subfigure}
+            \begin{subfigure}[b]{0.45\textwidth}
+                \centering
+                \includegraphics[width=0.9\linewidth]{../TrigMonitoring/images/outputs/Run2vsRun3/L2Calo_Eff_g20tighticaloloose_eta.png}
+                %\includegraphics[width=5.5cm,height=4cm]{../TrigMonitoring/images/outputs/Run2vsRun3/L2Calo_Eff_g20tighticaloloose_eta.png}
+                \caption{~}
+            \end{subfigure}
+            \begin{subfigure}[b]{0.45\textwidth}
+                \centering
+                \includegraphics[width=0.9\linewidth]{../TrigMonitoring/images/outputs/Run2vsRun3/HLT_Eff_g20tighticaloloose_eta.png}
+                %\includegraphics[width=5.5cm,height=4cm]{../TrigMonitoring/images/outputs/Run2vsRun3/HLT_Eff_g20tighticaloloose_eta.png}
+                \caption{~}
+            \end{subfigure}
+        \end{figure}
+
+        \column{0.3\textwidth}
+        \begin{itemize}
+            \item [-] 
+                Although we have the framework ready to show all steps of the trigger,
+                these samples show the known bug of containing the HLT data for all steps.
+            \item [-]
+                There is a big discrepancy between Run3 and Run2 for $\eta$ in the endcap region. 
+            \item [-]
+                icaloloose could be the cause of this.
+            \item [-]
+                We should explore what is going on in the intermidiate steps,
+                and for that we will need to get the data for those steps.
+        \end{itemize}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Run2 vs Run3 Trigger Efficiencies}
+    Comparison between Run2 and Run3 triggers efficiencies vs $p_T$ for g20\_tight\_icaloloose\_L1M15VHI.
+    \begin{columns}
+        \column{0.6\textwidth}
+        \begin{figure}[h!]
+            \centering
+            \includegraphics[width=0.9\linewidth]{../TrigMonitoring/images/outputs/Run2vsRun3/HLT_Eff_g20tighticaloloose_pt.png}
+        \end{figure}
+        \column{0.4\textwidth}
+        \begin{itemize}
+            \item [-]
+                Run2 vs Run3 are comparable in the whole range.
+            \item [-]
+                We see a sharper turn on due to an improved $E_T$ resolution for Run3,\
+                explained by the fact that HLT is implementing the same clustering reconstruction as offline (SuperClusters),\
+                while Run2 implemented Sliding-Window.
+        \end{itemize}
+    \end{columns}
+    
+    %\begin{columns}
+        %\column{0.8\textwidth}
+        %\begin{figure}[h!]
+            %\centering
+            %\begin{subfigure}[b]{0.45\textwidth}
+                %\centering
+                %\includegraphics[width=0.9\linewidth]{../TrigMonitoring/images/outputs/Run2vsRun3/L1Calo_Eff_g20tighticaloloose_pt.png}
+                %\includegraphics[width=5.5cm,height=4cm]{../TrigMonitoring/images/outputs/Run2vsRun3/L1Calo_Eff_g20tighticaloloose_eta.png}
+                %\caption{~}
+            %\end{subfigure}
+            %\begin{subfigure}[b]{0.45\textwidth}
+                %\centering
+                %\includegraphics[width=0.9\linewidth]{../TrigMonitoring/images/outputs/Run2vsRun3/EFCalo_Eff_g20tighticaloloose_pt.png}
+                %\includegraphics[width=5.5cm,height=4cm]{../TrigMonitoring/images/outputs/Run2vsRun3/EFCalo_Eff_g20tighticaloloose_eta.png}
+                %\caption{~}
+            %\end{subfigure}
+            %\begin{subfigure}[b]{0.45\textwidth}
+                %\centering
+                %\includegraphics[width=0.9\linewidth]{../TrigMonitoring/images/outputs/Run2vsRun3/L2Calo_Eff_g20tighticaloloose_pt.png}
+                %\includegraphics[width=5.5cm,height=4cm]{../TrigMonitoring/images/outputs/Run2vsRun3/L2Calo_Eff_g20tighticaloloose_eta.png}
+                %\caption{~}
+            %\end{subfigure}
+            %\begin{subfigure}[b]{0.45\textwidth}
+                %\centering
+                %\includegraphics[width=0.9\linewidth]{../TrigMonitoring/images/outputs/Run2vsRun3/HLT_Eff_g20tighticaloloose_pt.png}
+                %\includegraphics[width=5.5cm,height=4cm]{../TrigMonitoring/images/outputs/Run2vsRun3/HLT_Eff_g20tighticaloloose_eta.png}
+                %\caption{~}
+            %\end{subfigure}
+        %\end{figure}
+
+        %\column{0.3\textwidth}
+        %\begin{itemize}
+            %\item [-] 
+                %Run3 turn on is sharper due to improv et res,
+                %given using same recong algo like offline (supercluster), while run2 is (sliding-window.)
+        %\end{itemize}
+    %\end{columns}
+\end{frame}
+
+\subsection{g25}
+\begin{frame}{Run2 vs Run3 Trigger Efficiencies}
+    Comparison between Run2 and Run3 triggers efficiencies in $\eta$ (left) and $p_T$ (right) for g25\_medium\_L1EM20VH.
+    \begin{columns}
+        \column{0.9\textwidth}
+        \begin{figure}[h!]
+            \centering
+            \begin{subfigure}[b]{.45\textwidth}
+                \centering
+                \includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Run2vsRun3/HLT_Eff_g25medium_eta.png}
+                \caption{~}
+            \end{subfigure}
+            \hfill
+            \begin{subfigure}[b]{.45\textwidth}
+                \centering
+                \includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Run2vsRun3/HLT_Eff_g25medium_pt.png}
+                \caption{~}
+            \end{subfigure}
+            \hfill
+        \end{figure}
+
+        %\column{0.3\textwidth}
+        \begin{itemize}
+            \item [-]
+                For $ \eta$ we see again a big difference of performance between Run2 and Run3 in the endcap region,\
+                the latter performs worse.
+            \item [-]
+                For $p_T$ we see a worse performance of the Run3 trigger against Run2 over the whole range,\
+                but the turn on is sharper for the first one.
+        \end{itemize}
+    \end{columns}
+    %\begin{columns}
+        %\column{0.8\textwidth}
+        %\begin{figure}[h!]
+            %%\centering
+            %\begin{subfigure}[b]{0.45\textwidth}
+                %\centering
+                %\includegraphics[width=0.9\linewidth]{../TrigMonitoring/images/outputs/Run2vsRun3/L1Calo_Eff_g25medium_eta.png}
+                %%\includegraphics[width=5.5cm,height=4cm]{../TrigMonitoring/images/outputs/Run2vsRun3/L1Calo_Eff_g20tighticaloloose_eta.png}
+                %\caption{~}
+            %\end{subfigure}
+            %\begin{subfigure}[b]{0.45\textwidth}
+                %\centering
+                %\includegraphics[width=.9\linewidth]{../TrigMonitoring/images/outputs/Run2vsRun3/EFCalo_Eff_g25medium_eta.png}
+                %\caption{~}
+            %\end{subfigure}
+            %\begin{subfigure}[b]{0.45\textwidth}
+                %\centering
+                %\includegraphics[width=0.9\linewidth]{../TrigMonitoring/images/outputs/Run2vsRun3/L2Calo_Eff_g25medium_eta.png}
+                %\caption{~}
+            %\end{subfigure}
+            %\begin{subfigure}[b]{0.45\textwidth}
+                %\centering
+                %\includegraphics[width=0.9\linewidth]{../TrigMonitoring/images/outputs/Run2vsRun3/HLT_Eff_g25medium_eta.png}
+                %\caption{~}
+            %\end{subfigure}
+        %\end{figure}
+
+        %\column{0.3\textwidth}
+        %\begin{itemize}
+            %\item [-] 
+        %\end{itemize}
+    %\end{columns}
+\end{frame}
+%\begin{frame}{Run2 vs Run3 Trigger Efficiencies}
+    %Comparison between Run2 and Run3 triggers efficiencies for all g25 trigger levels in $p_T$.
+    %\begin{columns}
+        %\column{0.8\textwidth}
+        %\begin{figure}[h!]
+            %%\centering
+            %\begin{subfigure}[b]{0.45\textwidth}
+                %\centering
+                %\includegraphics[width=0.9\linewidth]{../TrigMonitoring/images/outputs/Run2vsRun3/L1Calo_Eff_g25medium_pt.png}
+                %\caption{~}
+            %\end{subfigure}
+            %\begin{subfigure}[b]{0.45\textwidth}
+                %\centering
+                %\includegraphics[width=.9\linewidth]{../TrigMonitoring/images/outputs/Run2vsRun3/EFCalo_Eff_g25medium_pt.png}
+                %\caption{~}
+            %\end{subfigure}
+            %\begin{subfigure}[b]{0.45\textwidth}
+                %\centering
+                %\includegraphics[width=0.9\linewidth]{../TrigMonitoring/images/outputs/Run2vsRun3/L2Calo_Eff_g25medium_pt.png}
+                %\caption{~}
+            %\end{subfigure}
+            %\begin{subfigure}[b]{0.45\textwidth}
+                %\centering
+                %\includegraphics[width=0.9\linewidth]{../TrigMonitoring/images/outputs/Run2vsRun3/HLT_Eff_g25medium_pt.png}
+                %\caption{~}
+            %\end{subfigure}
+        %\end{figure}
+
+        %\column{0.3\textwidth}
+        %\begin{itemize}
+            %\item [-] 
+        %\end{itemize}
+
+    %\end{columns}
+%\end{frame}
+
+\subsection{g120}
+\begin{frame}{Run2 vs Run3 Trigger Efficiencies}
+    Comparison between Run2 and Run3 triggers efficiencies in $\eta$ (left) and $p_T$ (right) for g120\_loose\_L1EM22VHI.
+    \begin{columns}
+        \column{0.9\textwidth}
+        \begin{figure}[h!]
+            \centering
+            \begin{subfigure}[b]{.45\textwidth}
+                \centering
+                \includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Run2vsRun3/HLT_Eff_g120loose_eta.png}
+                \caption{~}
+            \end{subfigure}
+            \hfill
+            \begin{subfigure}[b]{.45\textwidth}
+                \centering
+                \includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Run2vsRun3/HLT_Eff_g120loose_highet.png}
+                \caption{~}
+            \end{subfigure}
+            \hfill
+        \end{figure}
+        
+        %\column{0.3\textwidth}
+        \begin{itemize}
+            \item [-]
+                For $ \eta$ we see a worse performance from the Run3 trigger against the Run2 trigger over the whole range and both with and without Pileup. 
+           \item [-]
+                For $p_T$ the performance is also significantly worse for the Run3 trigger against the Run2 trigger over the whole range up to $p_T \ge 225$ $GeV$
+        \end{itemize}
+    \end{columns}
+    %\begin{columns}
+        %\column{0.8\textwidth}
+        %\begin{figure}[h!]
+            %%\centering
+            %\begin{subfigure}[b]{.45\textwidth}
+                %\centering
+                %\includegraphics[width=.9\linewidth]{../TrigMonitoring/images/outputs/Run2vsRun3/L1Calo_Eff_g120loose_eta.png}
+                %\caption{~}
+            %\end{subfigure}
+            %\begin{subfigure}[b]{.45\textwidth}
+                %\centering
+                %\includegraphics[width=.9\linewidth]{../TrigMonitoring/images/outputs/Run2vsRun3/EFCalo_Eff_g120loose_eta.png}
+                %\caption{~}
+            %\end{subfigure}
+            %\begin{subfigure}[b]{.45\textwidth}
+                %\centering
+                %\includegraphics[width=0.9\linewidth]{../TrigMonitoring/images/outputs/Run2vsRun3/L2Calo_Eff_g120loose_eta.png}
+                %\caption{~}
+            %\end{subfigure}
+            %\begin{subfigure}[b]{.45\textwidth}
+                %\centering
+                %\includegraphics[width=0.9\linewidth]{../TrigMonitoring/images/outputs/Run2vsRun3/HLT_Eff_g120loose_eta.png}
+                %\caption{~}
+            %\end{subfigure}
+        %\end{figure}
+
+        %\column{0.3\textwidth}
+        %\begin{itemize}
+            %\item [-] 
+        %\end{itemize}
+    %\end{columns}
+\end{frame}
+%\begin{frame}{Run2 vs Run3 Trigger Efficiencies}
+    %Comparison between Run2 and Run3 triggers efficiencies for all g25 trigger levels in $p_T$.
+    %\begin{columns}
+        %\column{0.8\textwidth}
+        %\begin{figure}[h!]
+            %%\centering
+            %\begin{subfigure}[b]{0.45\textwidth}
+                %\centering
+                %\includegraphics[width=0.9\linewidth]{../TrigMonitoring/images/outputs/Run2vsRun3/L1Calo_Eff_g120loose_highet.png}
+                %\caption{~}
+            %\end{subfigure}
+            %\begin{subfigure}[b]{0.45\textwidth}
+                %\centering
+                %\includegraphics[width=.9\linewidth]{../TrigMonitoring/images/outputs/Run2vsRun3/EFCalo_Eff_g120loose_highet.png}
+                %\caption{~}
+            %\end{subfigure}
+            %\begin{subfigure}[b]{0.45\textwidth}
+                %\centering
+                %\includegraphics[width=0.9\linewidth]{../TrigMonitoring/images/outputs/Run2vsRun3/L2Calo_Eff_g120loose_highet.png}
+                %\caption{~}
+            %\end{subfigure}
+            %\begin{subfigure}[b]{0.45\textwidth}
+                %\centering
+                %\includegraphics[width=0.9\linewidth]{../TrigMonitoring/images/outputs/Run2vsRun3/HLT_Eff_g120loose_highet.png}
+                %\caption{~}
+            %\end{subfigure}
+        %\end{figure}
+
+        %\column{0.3\textwidth}
+        %\begin{itemize}
+            %\item [-] 
+                %check if not missing evs in a previous level.
+        %\end{itemize}
+
+    %\end{columns}
+%\end{frame}
+
+%\begin{frame}{Run2 vs Run3 Trigger Efficiencies}
+    %Comparison between Run2 and Run3 triggers efficiencies for all g120 trigger levels in $\eta$(left) and $p_T$(right).
+    %\begin{figure}[h!]
+        %\centering
+        %\begin{subfigure}[b]{.45\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Run2vsRun3/Eff_g120_loose_eta.png}
+            %\caption{~}
+        %\end{subfigure}
+        %\hfill
+        %\begin{subfigure}[b]{.45\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Run2vsRun3/Eff_g120_loose_highet.png}
+            %\caption{~}
+        %\end{subfigure}
+        %\hfill
+    %\end{figure}
+%\end{frame}
+
+%\begin{frame}{Run3 Efficiencies}
+    %\framesubtitle{g120}
+    %No Pileup (top) and With Pileup (bottom) g120 trigger levels efficiencies in $\eta$(left), $\E_T$(middle) and $npvtx$(right).
+    %\begin{figure}[h!]
+        %\centering
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Eff_Run3 No PileUp_g120*VHI_eta_passed_vs_eta.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Eff_Run3 No PileUp_g120*VHI_highet_passed_vs_highet.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Eff_Run3 No PileUp_g120*VHI_npvtx_passed_vs_npvtx.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Eff_Run3 With PileUp_g120*VHI_eta_passed_vs_eta.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Eff_Run3 With PileUp_g120*VHI_highet_passed_vs_highet.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Eff_Run3 With PileUp_g120*VHI_npvtx_passed_vs_npvtx.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+    %\end{figure}
+%\end{frame}
+
+%\begin{frame}{Run3 Efficiencies}
+    %\framesubtitle{g25}
+    %No Pileup (top) and With Pileup (bottom) g25 trigger levels efficiencies in $\eta$(left), $\E_T$(middle) and $npvtx$(right).
+    %\begin{figure}[h!]
+        %\centering
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Eff_Run3 No PileUp_g25*VH_pt_passed_vs_pt.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Eff_Run3 No PileUp_g25*VH_eta_passed_vs_eta.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Eff_Run3 No PileUp_g25*VH_npvtx_passed_vs_npvtx.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Eff_Run3 With PileUp_g25*VH_pt_passed_vs_pt.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Eff_Run3 With PileUp_g25*VH_eta_passed_vs_eta.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Eff_Run3 With PileUp_g25*VH_npvtx_passed_vs_npvtx.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+    %\end{figure}
+%\end{frame}
+
+%\begin{frame}{Run3 Efficiencies}
+    %\framesubtitle{g22}
+    %No Pileup (top) and With Pileup (bottom) g22 trigger levels efficiencies in $\eta$(left), $\E_T$(middle) and $npvtx$(right).
+    %\begin{figure}[h!]
+        %\centering
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Eff_Run3 No PileUp_g22*VH_pt_passed_vs_pt.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Eff_Run3 No PileUp_g22*VH_eta_passed_vs_eta.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Eff_Run3 No PileUp_g22*VH_npvtx_passed_vs_npvtx.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Eff_Run3 With PileUp_g22*VH_pt_passed_vs_pt.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Eff_Run3 With PileUp_g22*VH_eta_passed_vs_eta.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Eff_Run3 With PileUp_g22*VH_npvtx_passed_vs_npvtx.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+    %\end{figure}
+%\end{frame}
+
+%\begin{frame}{Run3 Efficiencies}
+    %\framesubtitle{g20}
+    %No Pileup (top) and With Pileup (bottom) g20 trigger ``*VH'' levels efficiencies in $\eta$(left), $\E_T$(middle) and $npvtx$(right).
+    %\begin{figure}[h!]
+        %\centering
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Eff_Run3 No PileUp_g20*VH_pt_passed_vs_pt.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Eff_Run3 No PileUp_g20*VH_eta_passed_vs_eta.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Eff_Run3 No PileUp_g20*VH_npvtx_passed_vs_npvtx.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Eff_Run3 With PileUp_g20*VH_pt_passed_vs_pt.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Eff_Run3 With PileUp_g20*VH_eta_passed_vs_eta.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Eff_Run3 With PileUp_g20*VH_npvtx_passed_vs_npvtx.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+    %\end{figure}
+%\end{frame}
+
+%\begin{frame}{Run3 Efficiencies}
+    %\framesubtitle{g20}
+    %No Pileup (top) and With Pileup (bottom) g20 trigger ``*VHI'' levels efficiencies in $\eta$(left), $\E_T$(middle) and $npvtx$(right).
+    %\begin{figure}[h!]
+        %\centering
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Eff_Run3 No PileUp_g20*VHI_pt_passed_vs_pt.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Eff_Run3 No PileUp_g20*VHI_eta_passed_vs_eta.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Eff_Run3 No PileUp_g20*VHI_npvtx_passed_vs_npvtx.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Eff_Run3 With PileUp_g20*VHI_pt_passed_vs_pt.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Eff_Run3 With PileUp_g20*VHI_eta_passed_vs_eta.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Eff_Run3 With PileUp_g20*VHI_npvtx_passed_vs_npvtx.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+    %\end{figure}
+%\end{frame}
+\section{Resolutions}
+%\subsection{g120}
+%\subsection{g25}
+%\subsection{g20}
+\begin{frame}{Run2 vs Run3 Trigger Resolutions at HLT step}
+    \framesubtitle{g20}
+    g20 trigger levels resolutions for $Eratio$, $ethad$, $Rhad$ and $Reta$, $\eta$, $\phi$ from top left to bottom right.
+    \begin{columns}
+    \column{.7\textwidth}
+    \begin{figure}[h!]
+        \centering
+        \begin{subfigure}[b]{.3\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Run2vsRun3/Res_g20_tighticalo_res_eratio.png}
+            \caption{~}
+        \end{subfigure}
+        %\hfill
+        \begin{subfigure}[b]{.3\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Run2vsRun3/Res_g20_tighticalo_res_ethad.png}
+            \caption{~}
+        \end{subfigure}
+        %\hfill
+        \begin{subfigure}[b]{.3\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Run2vsRun3/Res_g20_tighticalo_res_Rhad.png}
+            \caption{~}
+        \end{subfigure}
+        %\hfill
+        \begin{subfigure}[b]{.3\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Run2vsRun3/Res_g20_tighticalo_res_Reta.png}
+            \caption{~}
+        \end{subfigure}
+        %\hfill
+        \begin{subfigure}[b]{.3\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Run2vsRun3/Res_g20_tighticalo_res_eta.png}
+            \caption{~}
+        \end{subfigure}
+        %\hfill
+        \begin{subfigure}[b]{.3\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Run2vsRun3/Res_g20_tighticalo_res_phi.png}
+            \caption{~}
+        \end{subfigure}
+    \end{figure}
+    \column{.3\textwidth}
+    Resolutions look alike from Run2 to Run3 with 2 notable exceptions:
+    \begin{itemize}
+        \item [-]
+            $ \eta$ and $ \phi$ resolutions are significantly improved in Run3.
+        \item [-]
+            $R_{\eta}$ shows a right tail in Run3 which suggests there is some issue to be addressed.
+        \item [-]
+            $E_T$ resolutions empty for Run3.
+    \end{itemize}
+    \end{columns}
+\end{frame}
+
+%\begin{frame}{Resolutions}
+    %\framesubtitle{g20 *VH - With PileUp}
+    %g20 ``*VH'' trigger levels resolutions for $Eratio$, $\eta$, $ethad$, $Rhad$ and $Reta$ from top left to bottom right.
+    %\begin{figure}[h!]
+        %\centering
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Res_Run 3 WithPileup_g20*VH_res_eratio.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Res_Run 3 WithPileup_g20*VH_res_eta.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Res_Run 3 WithPileup_g20*VH_res_ethad.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Res_Run 3 WithPileup_g20*VH_res_Rhad.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Res_Run 3 WithPileup_g20*VH_res_Reta.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+    %\end{figure}
+%\end{frame}
+
+%\begin{frame}{Resolutions}
+    %\framesubtitle{g20 *VHI - No PileUp}
+    %g20 ``*VHI'' trigger levels resolutions for $Eratio$, $\eta$, $ethad$, $Rhad$ and $Reta$ from top left to bottom right.
+    %\begin{figure}[h!]
+        %\centering
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Res_Run 3 NoPileup_g20*VHI_res_eratio.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Res_Run 3 NoPileup_g20*VHI_res_eta.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Res_Run 3 NoPileup_g20*VHI_res_ethad.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Res_Run 3 NoPileup_g20*VHI_res_Rhad.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Res_Run 3 NoPileup_g20*VHI_res_Reta.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+    %\end{figure}
+%\end{frame}
+
+%\begin{frame}{Resolutions}
+    %\framesubtitle{g20 *VHI - With PileUp}
+    %g20 ``*VHI'' trigger levels resolutions for $Eratio$, $\eta$, $ethad$, $Rhad$ and $Reta$ from top left to bottom right.
+    %\begin{figure}[h!]
+        %\centering
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Res_Run 3 WithPileup_g20*VHI_res_eratio.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Res_Run 3 WithPileup_g20*VHI_res_eta.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Res_Run 3 WithPileup_g20*VHI_res_ethad.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Res_Run 3 WithPileup_g20*VHI_res_Rhad.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Res_Run 3 WithPileup_g20*VHI_res_Reta.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+    %\end{figure}
+%\end{frame}
+
+%\begin{frame}{Resolutions}
+    %\framesubtitle{g22 - No PileUp}
+    %g22 ``*VH'' trigger levels resolutions for $Eratio$, $\eta$, $ethad$, $Rhad$ and $Reta$ from top left to bottom right.
+    %\begin{figure}[h!]
+        %\centering
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Res_Run 3 NoPileup_g22*VH_res_eratio.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Res_Run 3 NoPileup_g22*VH_res_eta.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Res_Run 3 NoPileup_g22*VH_res_ethad.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Res_Run 3 NoPileup_g22*VH_res_Rhad.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Res_Run 3 NoPileup_g22*VH_res_Reta.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+    %\end{figure}
+%\end{frame}
+
+%\begin{frame}{Resolutions}
+    %\framesubtitle{g22 - With PileUp}
+    %g22 ``*VH'' trigger levels resolutions for $Eratio$, $\eta$, $ethad$, $Rhad$ and $Reta$ from top left to bottom right.
+    %\begin{figure}[h!]
+        %\centering
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Res_Run 3 WithPileup_g22*VH_res_eratio.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Res_Run 3 WithPileup_g22*VH_res_eta.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Res_Run 3 WithPileup_g22*VH_res_ethad.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Res_Run 3 WithPileup_g22*VH_res_Rhad.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Res_Run 3 WithPileup_g22*VH_res_Reta.png}
+            %\caption{~}
+        %\end{subfigure}
+        %%\hfill
+    %\end{figure}
+%\end{frame}
+
+% TODO add ongoing and next steps as blocks
+\section{More updates}
+\begin{frame}
+    \begin{block}{On going}
+        \begin{itemize}
+            \item [-]
+                We got the same sample used for CNN photon Id implementation but using the HLT photon container at the presicion step,
+                instead of the offline container.
+            \item [-]
+                We will compare the CNN Photon Id implementation against both datasets,
+                offline and HLT@presicion photons,
+                with the architecture of Offline CNN and HLT@Fast CNN.
+        \end{itemize}
+    \end{block}
+    \begin{block}{Next steps}
+    \begin{itemize}
+        \item [-]
+            Find out the causes for the low efficiencies in the icalovloose id.
+        \item [-]
+            Show all level efficiencies using the fixed signal samples for Run3,
+            with the addition of the correctly ported CutBased selection for Fast photons.
+        \item [-]
+            Prepare Python script to run a set of preselected comparisons.
+    \end{itemize}
+    \end{block}
+\end{frame}
+
+\section{Summary}
+\begin{frame}{Summary}
+    \begin{itemize}
+        \item [-]
+            Compared Run2 triggers efficiencies against Run3 at HLT step,
+            and showed that the setup and tools are ready to compare agains all other steps.\
+            However, we see that the performance is generally worse than Run2 in Run3.
+        \item [-]
+            Showed current Run3 resolutions,
+            noting that there seems to be an issue with $R_\eta$,
+            and that $E_T$ is not filled.
+            
+        %\item 
+            %We are able to \alert{train over a large sample} using \textit{generator training} (CPU only, not multithreading yet).
+            %Some bugs to address still.
+        %\item 
+            %Current prototype CNN implementation performs better than current cut base FastReco implementation both in \textit{Inclusive} and \textit{Binned} cases,
+            %in all $(\eta;p_T)$ ranges.
+            %%The \textit{Inclusive Testing} shows a much \alert{better performance of the CNN model over the HLT Fast-Reco WP}, 
+            %%as well as over the \textit{Offline Tight} WP (computed for reference only).
+        %%\item 
+            %%The \textit{Binned Testing} shows that the \alert{CNN model preforms better than the HLT Fast-Reco WP in all $(\eta;p_T)$ ranges},
+        %\item
+            %We can see that when feeding (or using) only the 2nd CaloLayer data,
+            %the $\eta$ regions where the cells shape changes,
+            %has a direct impact on performance.
+            %May need one model for Barrel and other for Endcap?
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Backup}
+\end{frame}
+\begin{frame}{Extra Slides}
+\framesubtitle{g120 Run2 vs Run3 Trigger Resolutions at HLT step}
+    g120 trigger levels resolutions for $Eratio$, $ethad$, $Rhad$ and $Reta$, $\eta$, $\phi$ from top left to bottom right.
+    \begin{figure}[h!]
+        \centering
+        \begin{subfigure}[b]{.3\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Run2vsRun3/Res_g120_loose_res_eratio.png}
+            \caption{~}
+        \end{subfigure}
+        %\hfill
+        \begin{subfigure}[b]{.3\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Run2vsRun3/Res_g120_loose_res_ethad.png}
+            \caption{~}
+        \end{subfigure}
+        %\hfill
+        \begin{subfigure}[b]{.3\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Run2vsRun3/Res_g120_loose_res_Rhad.png}
+            \caption{~}
+        \end{subfigure}
+        %\hfill
+        \begin{subfigure}[b]{.3\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Run2vsRun3/Res_g120_loose_res_Reta.png}
+            \caption{~}
+        \end{subfigure}
+        %\hfill
+        \begin{subfigure}[b]{.3\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Run2vsRun3/Res_g120_loose_res_eta.png}
+            \caption{~}
+        \end{subfigure}
+        %\hfill
+        \begin{subfigure}[b]{.3\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Run2vsRun3/Res_g120_loose_res_phi.png}
+            \caption{~}
+        \end{subfigure}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Extra Slides}
+\framesubtitle{g25 Run2 vs Run3 Trigger Resolutions at HLT step}
+    g25 trigger levels resolutions for $Eratio$, $ethad$, $Rhad$ and $Reta$, $\eta$, $\phi$ from top left to bottom right.
+    \begin{figure}[h!]
+        \centering
+        \begin{subfigure}[b]{.3\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Run2vsRun3/Res_g25_medium_res_eratio.png}
+            \caption{~}
+        \end{subfigure}
+        %\hfill
+        \begin{subfigure}[b]{.3\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Run2vsRun3/Res_g25_medium_res_ethad.png}
+            \caption{~}
+        \end{subfigure}
+        %\hfill
+        \begin{subfigure}[b]{.3\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Run2vsRun3/Res_g25_medium_res_Rhad.png}
+            \caption{~}
+        \end{subfigure}
+        %\hfill
+        \begin{subfigure}[b]{.3\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Run2vsRun3/Res_g25_medium_res_Reta.png}
+            \caption{~}
+        \end{subfigure}
+        %\hfill
+        \begin{subfigure}[b]{.3\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Run2vsRun3/Res_g25_medium_res_eta.png}
+            \caption{~}
+        \end{subfigure}
+        %\hfill
+        \begin{subfigure}[b]{.3\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{../TrigMonitoring/images/outputs/Run2vsRun3/Res_g25_medium_res_phi.png}
+            \caption{~}
+        \end{subfigure}
+    \end{figure}
+\end{frame}
+
+%\begin{frame}{Extra Slides}
+    %\framesubtitle{Binned ROC curves}
+    %\begin{figure}[h!]
+    %\label{fig:ROC1}
+        %\centering
+        %\begin{subfigure}[b]{.35\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/Val_output/plots/eta0.0xpT10.0_outROC.png}
+            %\caption{~}
+            %\label{fig:ROC0010}
+        %\end{subfigure}
+        %\hfill
+        %\begin{subfigure}[b]{.35\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/Val_output/plots/eta0.0xpT20.0_outROC.png}
+            %\caption{~}
+            %\label{fig:ROC0020}
+        %\end{subfigure}
+        %\hfill
+        %\begin{subfigure}[b]{.35\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/Val_output/plots/eta0.0xpT30.0_outROC.png}
+            %\caption{~}
+            %\label{fig:ROC0030}
+        %\end{subfigure}
+        %\caption{%
+                %\textit{%
+                    %ROC curve for 
+                    %$(\eta,p_T) = (0.0,10)$~\ref{fig:ROC0010}, 
+                    %$(\eta,p_T) = (0.0,20)$~\ref{fig:ROC0020}, 
+                    %$(\eta,p_T) = (0.0,30)$~\ref{fig:ROC0030}, 
+                    %Various WP are also ploted alongside,
+                    %Tight in blue and HLT at FastReco in green.
+                    %}
+                %}
+    %\end{figure}
+%\end{frame}
+
+%\begin{frame}{Update}
+    %\begin{itemize}
+        %\item 
+            %I ran the TrigMonitoring tool:
+            %\tiny{%
+                %\texttt{%
+                    %Run3DQTestingDriver.py --dqOffByDefault Input.Files=``['AOD.root']'' DQ.Steering.doHLTMon=True DQ.Steering.HLT.doJet=False DQ.Steering.HLT.doGeneral=False DQ.Steering.HLT.doEgamma=True DQ.Steering.HLT.doMET=False DQ.Steering.HLT.doBjet=False DQ.Steering.HLT.doCalo=False DQ.Steering.HLT.doMuon=False DQ.Steering.HLT.doBphys=False DQ.Steering.HLT.doMinBias=False
+                %}
+            %}
+
+            %over this file (as an example):
+
+            %\tiny{%
+                %\texttt{valid1.343981.PowhegPythia8EvtGen\_NNLOPS\_nnlo\_30\_ggH125\_gamgam.recon.AOD.e5607\_e5984\_s3126\_d1605\_r12262\_tid23444304\_00/\\AOD.23444304.\_000178.pool.root.1}
+            %}
+
+        %\item
+            %\textbf{WIP}
+            %I am developing a SWAN notebook to visualize the efficiencies at a glance.
+            %At the current state,
+            %the notebook allows to explore a file,
+            %and plot many histograms for a given filter criteria.
+            %For instance, to search for all distributions at HLT it will be:
+            %\texttt{%
+                %filterpath = "run\_310000/HLT/EgammaMon/*/Distributions/HLT/*"
+            %}
+            %%\texttt{filterpath = }            
+
+        %\item 
+            %photon trigger levels looking at: g20, g22, g25
+    %\end{itemize}
+%\end{frame}
+
+%\begin{frame}{Context}
+    %\framesubtitle{The aim}
+    %\begin{columns}
+    %\column{0.6\textwidth}
+    %\begin{itemize}
+        %\item 
+            %At HLT reconstruction and identification is done in an L1EM ROI and in 2 steps:
+            %\begin{itemize}
+                %\item 
+                    %Fast step (early background rejection)
+                %\item 
+                    %Precision step (instantiating offline algorithms)
+            %\end{itemize}
+        %\item 
+            %To train a CNN model to have a higher early better background rejection at the same signal efficiency (perform better) than Fast Reconstruction Cut-Based selection at photon ID.
+        %\item 
+            %The proposal is to use the energy distribution deposited by photons at the 2nd layer of the Calorimeter cells,
+            %as images to feed a Convolutional Neural Network classifier.
+        %\item 
+            %Previous work related to this one were carried out by \textit{Mohamed Belfkir} for offline photon Id.
+        %\item 
+            %All development is carried out with MC samples.
+        %\item 
+            %Cells used are the ones built with the offline algorithm
+            %(which are in principle different from the ones at HLT-FastReco).
+    %\end{itemize}
+    %\column{0.4\textwidth}
+    %\begin{figure}[h!]
+        %\centering
+        %\includegraphics[width = 0.65\textwidth]{images/PhotonSequence.pdf}
+        %\caption{%
+            %\textit{%
+            %Algorithm sequence at HLT for photons.
+            %}
+        %}
+        %\label{fig:HLTalgo}
+    %\end{figure}
+    %\end{columns}
+%\end{frame}
+
+%\begin{frame}{Package run example}
+    %\framesubtitle{Sample details}
+    %Todays update will show the training and testing on the following samples.
+    %\begin{itemize}
+        %\item 
+            %MC Data from \href{https://gitlab.cern.ch/mobelfki/zllyathderivation}{ZllyAthDerivation},
+            %by Pythia8.
+        %\item 
+            %\textbf{DiJet} \textbf{\textit{for background only}} (14 Gb),
+            %MC16 list contains: JF17, JF23, JF35 and JF50
+        %\item 
+            %\textbf{GammaJet} for y+jet \textbf{\textit{for signal only}} (33 Gb),
+            %MC16 list contains: DP8\_17, DP17\_35, DP35\_50, DP50\_70, DP70\_140 and DP140\_280 
+        %\item
+            %Signal is TruthMatch,
+            %Background is NonTruthMatch.
+            %These define the \texttt{Labels} or classes.
+        %\item 
+            %\texttt{Input Data} are the Cluster Images from the \textit{\textbf{2nd Calorimeter Layer}}.
+        %\item 
+            %Events where selected using Strategy 1,
+            %meaning only keeping those with \textbf{healthy} clusters (not missing cells) and 
+            %$\eta < 2.5$.
+    %\end{itemize}
+    %Overall we are dealing with $47$ $Gb$ of data,
+    %around $4,7 \times 10^6$ images (events) in total.
+%\end{frame}
+
+%\begin{frame}{Package run example}
+    %\framesubtitle{Preprocessing details}
+    %For the rest of the talk everything is computed using 
+    %\href{https://gitlab.cern.ch/snoaccor/cnn-photon-id}{cnn-photon-id} 
+    %package\footnote{%
+    %I am pointing to my fork,
+    %because the generator training was not yet sent to be merged.}
+    %in \texttt{usage=HLT}.
+    %\begin{itemize}
+        %\item 
+            %We have 3 independent subsamples (fraction of total):
+            %Train ($50\%$), Validate ($25\%$), Test ($25\%$).
+            %Where Train and Validate are used in the \textit{training stage},
+            %and Test in the \textit{testing stage}.
+        %\item
+            %From the \textit{xAODs} we store the \textit{tagged images} in NumpyArrays binary files\footnote{%
+           %It is actually one ordered file for each CaloLayerImage and one for the Labels}.
+            %%for the Train and Validate subsamples.
+            %%We refer to the set (1 Signal file, 1 Background file) as a \textit{chunk},
+            %%in this case we make a total of 14.
+    %\end{itemize}
+    %\begin{figure}[h!]
+        %\centering
+        %\includegraphics[width = 0.5\textwidth]{images/SamplesDist.png}
+        %\caption{%
+            %\textit{%
+                %Subsamples $p_T$ distributions for \textit{Training} (blue),
+                %\textit{Validation} (red) and \textit{Testing} (green).
+            %}
+        %}
+        %\label{fig:sampledist}
+    %\end{figure}
+%\end{frame}
+
+%\begin{frame}{Package run example}
+    %\framesubtitle{Training}
+    %The training was done in two steps:
+    %\begin{itemize}
+        %\item[1.]
+            %Dynamic model search using \href{https://keras-team.github.io/keras-tuner/}{KerasTuner} ,
+            %over a subsample (about 100k images).
+            %A ``\textit{dynamic search}'' means that we iterate many trainings changing the model architectures hyperparameters to evaluate the performance.
+            %This allows to test different architectures over a subsample,
+            %to choose the one that has the greater chances on discriminating signal and background.
+            %\begin{itemize}
+                %%\item 
+                    %%We use a subsample of the full sample
+                    %%($\simeq 2$ Gb of data about 100k images)
+                %\item[1.1] 
+                    %Using KerasTuner we search an Hyperparameters space,
+                    %changing for instance the number of layers, nodes, etc.
+                %\item[1.2]
+                    %We keep the top 4 ones according to some performance criteria.
+                %\item    
+                    %This procedure can be quite time and resources consuming.
+            %\end{itemize}
+        %\item[2.]
+            %We retrain those (or the best) with the full train dataset.
+            %%using \textit{Python Generators}.
+    %\end{itemize}
+%\end{frame}
+
+%\begin{frame}{Best model architecture}
+    %\begin{columns}
+    %\column{0.5\textwidth}
+    %Training is done inclusive in $\eta$ and $p_T$ with the following parameters.
+    %\begin{itemize}
+        %\item 
+            %loss: \textit{binary cross-entropy} 
+        %\item
+            %optimizer: Adam
+        %\item 
+            %learning rate: $10^{-3}$ (default keras value)
+        %\item 
+            %epochs: $150$
+        %\item 
+            %batch size: $128$
+        %\item
+            %the samples are shuffled and we use class re-weighting.
+    %\end{itemize}
+    
+    %\column{0.5\textwidth}
+        %\begin{figure}[h!]
+        %\label{fig:model_arch}
+            %\centering
+            %\includegraphics[width=8cm, height=7cm, keepaspectratio]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/model.png}
+            %\caption{%
+                %\textit{%
+                %Model architecture.
+                %}
+            %}
+        %\end{figure}
+    %\end{columns}
+%\end{frame}
+
+%\begin{frame}{Full training results - \textbf{preliminary}}
+    %\begin{figure}[h!]
+        %\centering
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/history/lossvsEp.png}
+            %\caption{Loss}
+            %\label{subfig:LOSS}
+        %\end{subfigure}
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/history/aucvsEp.png}
+            %\caption{AUC}
+            %\label{subfig:AUC}
+        %\end{subfigure}
+        %\begin{subfigure}[b]{.3\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/history/recallvsEp.png}
+            %\caption{Signal eff}
+            %\label{subfig:RECALL}
+        %\end{subfigure}
+        %\caption{~}
+        %%\caption{%
+            %%\textit{%
+                %%Metrics computed during training over the whole sample (\textbf{PRELIMINARY PLOTS}).
+                %%Loss~\ref{subfig:LOSS} (top left),
+                %%AUC~\ref{subfig:AUC} (top right)
+                %%and signal efficiency or recall~\ref{subfig:RECALL} (bottom),
+                %%as metrics $vs$ epochs for training (blue) and validation (red). 
+                %%}
+            %%}
+        %\label{fig:metrics}
+    %\end{figure}
+    %\begin{itemize}
+        %\item
+            %Training truncated early $\rightarrow$ \alert{unexpected}.
+            %Under investigation (bug in the generator loop?).
+        %\item
+            %Looking at both the AUC and the Loss, 
+            %we can see that the best set of weights is reached at epoch 11.
+            %After that we see divergence of the fitting,
+            %probably related to the former point
+            %(issue with the optimizer? the learning rate? the memory?)
+        %\item
+            %\centering
+            %\begin{tabular}{l|c|c|c|}
+                %Epoch    &Loss   &$\text{AUC}_{val}$ &$\text{Recall}_{val}$ \\
+                %\hline
+                %$11$     &$0.25$ &$0.9455$           &$0.887$
+            %\end{tabular} 
+    %\end{itemize}
+%\end{frame}
+
+%\begin{frame}{Full testing - \textbf{preliminary}}
+    %\framesubtitle{Inclusive ROC curve and performance comparison}
+    %\begin{itemize}
+        %\item
+            %The testing is carried over the whole subsample \textit{testing} using only 1 chunk.
+        %\item
+            %The testing is computed both \textbf{\textit{Inclusive}} and \textbf{\textit{Binned}}.
+        %\item 
+            %The ROC curve for the trained model,
+            %carried over the inclusive testing subsample is plotted in orange.
+        %\item 
+            %Along side this curve the FastReco selection WP (green circle)
+            %and the Tight WP (blue circle) are plotted.
+    %\end{itemize}
+    %\begin{figure}[h!]
+        %\centering
+        %\includegraphics[width=.7\textwidth]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/Val_output/plots/full_outROC.png}
+        %\caption{~}
+        %\label{fig:ROCInc}
+    %\end{figure}
+%\end{frame}
+
+%\begin{frame}{Binned testing results - \textbf{preliminary}}
+    %\begin{itemize}
+        %\item 
+            %AUC matrix for MC data in Testing over the full \textit{Test Sample}.
+        %\item 
+            %Each matrix elements corresponds to the integrated ROC curve for the respective $(\eta,p_T)$ range.
+        %\item 
+            %The uncertainties are all statistical,
+            %and computed integrating the lower (upper)``error'' ROC curves,
+            %more info \href{https://gitlab.cern.ch/snoaccor/roc_witherrorbars}{here}.
+        %\item 
+            %Comparison against CutBased $(\eta,p_T)$ in backup.
+    %\end{itemize}
+    %\begin{figure}[h!]
+        %\centering
+        %\includegraphics[width=.75\textwidth]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/Val_output/plots/AUC_Mode2_HEATMAP.png}
+        %\caption{~}
+            %%\textit{%
+                %%AUC matrix for MC data in Validation over the full \textit{Test Sample}.
+                %%Each matrix elements corresponds to the integrated ROC curve for the respective 
+                %%$(\eta,p_T)$ range.
+                %%The uncertainties are all statistical,
+                %%and computed integrating the lower (upper)``error'' ROC curves,
+                %%more info \href{https://gitlab.cern.ch/snoaccor/roc_witherrorbars}{here}.
+            %%}
+        %%}
+        %\label{fig:AUCMAT}
+    %\end{figure}
+%\end{frame}
+%\begin{frame}{Extra Slides}
+    %\framesubtitle{Binned ROC curves}
+    %\begin{figure}[h!]
+    %\label{fig:ROC2}
+        %\centering
+        %\begin{subfigure}[b]{.35\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/Val_output/plots/eta0.0xpT40.0_outROC.png}
+            %\caption{~}
+            %\label{fig:ROC0040}
+        %\end{subfigure}
+        %\hfill
+        %\begin{subfigure}[b]{.35\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/Val_output/plots/eta0.0xpT60.0_outROC.png}
+            %\caption{~}
+            %\label{fig:ROC0060}
+        %\end{subfigure}
+        %\hfill
+        %\begin{subfigure}[b]{.35\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/Val_output/plots/eta0.0xpT80.0_outROC.png}
+            %\caption{~}
+            %\label{fig:ROC0080}
+        %\end{subfigure}
+        %\caption{%
+                %\textit{%
+                    %ROC curve for 
+                    %$(\eta,p_T) = (0.0,40)$~\ref{fig:ROC0040}, 
+                    %$(\eta,p_T) = (0.0,60)$~\ref{fig:ROC0060}, 
+                    %$(\eta,p_T) = (0.0,80)$~\ref{fig:ROC0080}, 
+                    %Various WP are also ploted alongside,
+                    %Tight in blue and HLT at FastReco in green.
+                    %}
+                %}
+    %\end{figure}
+%\end{frame}
+
+%\begin{frame}{Extra Slides}
+    %\framesubtitle{Binned ROC curves}
+    %\begin{figure}[h!]
+    %\label{fig:ROC3}
+        %\centering
+        %\begin{subfigure}[b]{.35\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/Val_output/plots/eta0.6xpT10.0_outROC.png}
+            %\caption{~}
+            %\label{fig:ROC0610}
+        %\end{subfigure}
+        %\hfill
+        %\begin{subfigure}[b]{.35\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/Val_output/plots/eta0.6xpT20.0_outROC.png}
+            %\caption{~}
+            %\label{fig:ROC0620}
+        %\end{subfigure}
+        %\hfill
+        %\begin{subfigure}[b]{.35\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/Val_output/plots/eta0.6xpT30.0_outROC.png}
+            %\caption{~}
+            %\label{fig:ROC0630}
+        %\end{subfigure}
+        %\caption{%
+                %\textit{%
+                    %ROC curve for 
+                    %$(\eta,p_T) = (0.6,10)$~\ref{fig:ROC0610}, 
+                    %$(\eta,p_T) = (0.6,20)$~\ref{fig:ROC0620}, 
+                    %$(\eta,p_T) = (0.6,30)$~\ref{fig:ROC0630}, 
+                    %Various WP are also ploted alongside,
+                    %Tight in blue and HLT at FastReco in green.
+                    %}
+                %}
+    %\end{figure}
+%\end{frame}
+
+%\begin{frame}{Extra Slides}
+    %\framesubtitle{Binned ROC curves}
+    %\begin{figure}[h!]
+        %\centering
+        %\begin{subfigure}[b]{.35\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/Val_output/plots/eta0.6xpT40.0_outROC.png}
+            %\caption{~}
+            %\label{fig:ROC0640}
+        %\end{subfigure}
+        %\hfill
+        %\begin{subfigure}[b]{.35\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/Val_output/plots/eta0.6xpT60.0_outROC.png}
+            %\caption{~}
+            %\label{fig:ROC0660}
+        %\end{subfigure}
+        %\hfill
+        %\begin{subfigure}[b]{.35\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/Val_output/plots/eta0.6xpT80.0_outROC.png}
+            %\caption{~}
+            %\label{fig:ROC0680}
+        %\end{subfigure}
+        %\caption{%
+                %\textit{%
+                    %ROC curve for 
+                    %$(\eta,p_T) = (0.6,40)$~\ref{fig:ROC0640}, 
+                    %$(\eta,p_T) = (0.6,60)$~\ref{fig:ROC0660}, 
+                    %$(\eta,p_T) = (0.6,80)$~\ref{fig:ROC0680}, 
+                    %Various WP are also ploted alongside,
+                    %Tight in blue and HLT at FastReco in green.
+                    %}
+                %}
+        %\label{fig:ROC4}
+    %\end{figure}
+%\end{frame}
+
+%\begin{frame}{Extra Slides}
+    %\framesubtitle{Binned ROC curves}
+    %\begin{figure}[h!]
+    %\label{fig:ROC5}
+        %\centering
+        %\begin{subfigure}[b]{.35\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/Val_output/plots/eta0.8xpT10.0_outROC.png}
+            %\caption{~}
+            %\label{fig:ROC0810}
+        %\end{subfigure}
+        %\hfill
+        %\begin{subfigure}[b]{.35\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/Val_output/plots/eta0.8xpT20.0_outROC.png}
+            %\caption{~}
+            %\label{fig:ROC0820}
+        %\end{subfigure}
+        %\hfill
+        %\begin{subfigure}[b]{.35\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/Val_output/plots/eta0.8xpT30.0_outROC.png}
+            %\caption{~}
+            %\label{fig:ROC0830}
+        %\end{subfigure}
+        %\caption{%
+                %\textit{%
+                    %ROC curve for 
+                    %$(\eta,p_T) = (0.8,10)$~\ref{fig:ROC0810}, 
+                    %$(\eta,p_T) = (0.8,20)$~\ref{fig:ROC0820}, 
+                    %$(\eta,p_T) = (0.8,30)$~\ref{fig:ROC0830}, 
+                    %Various WP are also ploted alongside,
+                    %Tight in blue and HLT at FastReco in green.
+                    %}
+                %}
+    %\end{figure}
+%\end{frame}
+
+%\begin{frame}{Extra Slides}
+    %\framesubtitle{Binned ROC curves}
+    %\begin{figure}[h!]
+        %\centering
+        %\begin{subfigure}[b]{.35\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/Val_output/plots/eta0.8xpT40.0_outROC.png}
+            %\caption{~}
+            %\label{fig:ROC0840}
+        %\end{subfigure}
+        %\hfill
+        %\begin{subfigure}[b]{.35\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/Val_output/plots/eta0.8xpT60.0_outROC.png}
+            %\caption{~}
+            %\label{fig:ROC0860}
+        %\end{subfigure}
+        %\hfill
+        %\begin{subfigure}[b]{.35\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/Val_output/plots/eta0.8xpT80.0_outROC.png}
+            %\caption{~}
+            %\label{fig:ROC0880}
+        %\end{subfigure}
+        %\caption{%
+                %\textit{%
+                    %ROC curve for 
+                    %$(\eta,p_T) = (0.8,40)$~\ref{fig:ROC0840}, 
+                    %$(\eta,p_T) = (0.8,60)$~\ref{fig:ROC0860}, 
+                    %$(\eta,p_T) = (0.8,80)$~\ref{fig:ROC0880}, 
+                    %Various WP are also ploted alongside,
+                    %Tight in blue and HLT at FastReco in green.
+                    %}
+                %}
+        %\label{fig:ROC6}
+    %\end{figure}
+%\end{frame}
+
+%\begin{frame}{Extra Slides}
+    %\framesubtitle{Binned ROC curves}
+    %\begin{figure}[h!]
+        %\centering
+        %\begin{subfigure}[b]{.35\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/Val_output/plots/eta1.1xpT10.0_outROC.png}
+            %\caption{~}
+            %\label{fig:ROC1110}
+        %\end{subfigure}
+        %\hfill
+        %\begin{subfigure}[b]{.35\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/Val_output/plots/eta1.1xpT20.0_outROC.png}
+            %\caption{~}
+            %\label{fig:ROC1120}
+        %\end{subfigure}
+        %\hfill
+        %\begin{subfigure}[b]{.35\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/Val_output/plots/eta1.1xpT30.0_outROC.png}
+            %\caption{~}
+            %\label{fig:ROC1130}
+        %\end{subfigure}
+        %\caption{%
+                %\textit{%
+                    %ROC curve for 
+                    %$(\eta,p_T) = (1.1,10)$~\ref{fig:ROC1110}, 
+                    %$(\eta,p_T) = (1.1,20)$~\ref{fig:ROC1120}, 
+                    %$(\eta,p_T) = (1.1,30)$~\ref{fig:ROC1130}, 
+                    %Various WP are also ploted alongside,
+                    %Tight in blue and HLT at FastReco in green.
+                    %}
+                %}
+        %\label{fig:ROC7}
+    %\end{figure}
+%\end{frame}
+
+%\begin{frame}{Extra Slides}
+    %\framesubtitle{Binned ROC curves}
+    %\begin{figure}[h!]
+        %\centering
+        %\begin{subfigure}[b]{.35\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/Val_output/plots/eta1.1xpT40.0_outROC.png}
+            %\caption{~}
+            %\label{fig:ROC1140}
+        %\end{subfigure}
+        %\hfill
+        %\begin{subfigure}[b]{.35\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/Val_output/plots/eta1.1xpT60.0_outROC.png}
+            %\caption{~}
+            %\label{fig:ROC1160}
+        %\end{subfigure}
+        %\hfill
+        %\begin{subfigure}[b]{.35\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/Val_output/plots/eta1.1xpT80.0_outROC.png}
+            %\caption{~}
+            %\label{fig:ROC1180}
+        %\end{subfigure}
+        %\caption{%
+                %\textit{%
+                    %ROC curve for 
+                    %$(\eta,p_T) = (1.1,40)$~\ref{fig:ROC1140}, 
+                    %$(\eta,p_T) = (1.1,60)$~\ref{fig:ROC1160}, 
+                    %$(\eta,p_T) = (1.1,80)$~\ref{fig:ROC1180}, 
+                    %Various WP are also ploted alongside,
+                    %Tight in blue and HLT at FastReco in green.
+                    %}
+                %}
+        %\label{fig:ROC8}
+    %\end{figure}
+%\end{frame}
+
+%\begin{frame}{Extra Slides}
+    %\framesubtitle{Binned ROC curves}
+    %\begin{figure}[h!]
+        %\centering
+        %\begin{subfigure}[b]{.35\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/Val_output/plots/eta1.5xpT10.0_outROC.png}
+            %\caption{~}
+            %\label{fig:ROC1510}
+        %\end{subfigure}
+        %\hfill
+        %\begin{subfigure}[b]{.35\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/Val_output/plots/eta1.5xpT20.0_outROC.png}
+            %\caption{~}
+            %\label{fig:ROC1520}
+        %\end{subfigure}
+        %\hfill
+        %\begin{subfigure}[b]{.35\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/Val_output/plots/eta1.5xpT30.0_outROC.png}
+            %\caption{~}
+            %\label{fig:ROC1530}
+        %\end{subfigure}
+        %\caption{%
+                %\textit{%
+                    %ROC curve for 
+                    %$(\eta,p_T) = (1.5,10)$~\ref{fig:ROC1510}, 
+                    %$(\eta,p_T) = (1.5,20)$~\ref{fig:ROC1520}, 
+                    %$(\eta,p_T) = (1.5,30)$~\ref{fig:ROC1530}, 
+                    %Various WP are also ploted alongside,
+                    %Tight in blue and HLT at FastReco in green.
+                    %}
+                %}
+    %\label{fig:ROC9}
+    %\end{figure}
+%\end{frame}
+
+%\begin{frame}{Extra Slides}
+    %\framesubtitle{Binned ROC curves}
+    %\begin{figure}[h!]
+        %\centering
+        %\begin{subfigure}[b]{.35\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/Val_output/plots/eta1.5xpT40.0_outROC.png}
+            %\caption{~}
+            %\label{fig:ROC1540}
+        %\end{subfigure}
+        %\hfill
+        %\begin{subfigure}[b]{.35\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/Val_output/plots/eta1.5xpT60.0_outROC.png}
+            %\caption{~}
+            %\label{fig:ROC1560}
+        %\end{subfigure}
+        %\hfill
+        %\begin{subfigure}[b]{.35\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/Val_output/plots/eta1.5xpT80.0_outROC.png}
+            %\caption{~}
+            %\label{fig:ROC1580}
+        %\end{subfigure}
+        %\caption{%
+                %\textit{%
+                    %ROC curve for 
+                    %$(\eta,p_T) = (1.5,40)$~\ref{fig:ROC1540}, 
+                    %$(\eta,p_T) = (1.5,60)$~\ref{fig:ROC1560}, 
+                    %$(\eta,p_T) = (1.5,80)$~\ref{fig:ROC1580}, 
+                    %Various WP are also ploted alongside,
+                    %Tight in blue and HLT at FastReco in green.
+                    %}
+                %}
+    %\label{fig:ROC10}
+    %\end{figure}
+%\end{frame}
+
+%\begin{frame}{Extra Slides}
+    %\framesubtitle{Binned ROC curves}
+    %\begin{figure}[h!]
+    %\label{fig:ROC11}
+        %\centering
+        %\begin{subfigure}[b]{.35\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/Val_output/plots/eta1.8xpT10.0_outROC.png}
+            %\caption{~}
+            %\label{fig:ROC1810}
+        %\end{subfigure}
+        %\hfill
+        %\begin{subfigure}[b]{.35\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/Val_output/plots/eta1.8xpT20.0_outROC.png}
+            %\caption{~}
+            %\label{fig:ROC1820}
+        %\end{subfigure}
+        %\hfill
+        %\begin{subfigure}[b]{.35\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/Val_output/plots/eta1.8xpT30.0_outROC.png}
+            %\caption{~}
+            %\label{fig:ROC1830}
+        %\end{subfigure}
+        %\caption{%
+                %\textit{%
+                    %ROC curve for 
+                    %$(\eta,p_T) = (1.8,10)$~\ref{fig:ROC1810}, 
+                    %$(\eta,p_T) = (1.8,20)$~\ref{fig:ROC1820}, 
+                    %$(\eta,p_T) = (1.8,30)$~\ref{fig:ROC1830}, 
+                    %Various WP are also ploted alongside,
+                    %Tight in blue and HLT at FastReco in green.
+                    %}
+                %}
+    %\end{figure}
+%\end{frame}
+
+%\begin{frame}{Extra Slides}
+    %\framesubtitle{Binned ROC curves}
+    %\begin{figure}[h!]
+    %\label{fig:ROC12}
+        %\centering
+        %\begin{subfigure}[b]{.35\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/Val_output/plots/eta1.8xpT40.0_outROC.png}
+            %\caption{~}
+            %\label{fig:ROC1840}
+        %\end{subfigure}
+        %\hfill
+        %\begin{subfigure}[b]{.35\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/Val_output/plots/eta1.8xpT60.0_outROC.png}
+            %\caption{~}
+            %\label{fig:ROC1860}
+        %\end{subfigure}
+        %\hfill
+        %\begin{subfigure}[b]{.35\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/Val_output/plots/eta1.8xpT80.0_outROC.png}
+            %\caption{~}
+            %\label{fig:ROC1880}
+        %\end{subfigure}
+        %\caption{%
+                %\textit{%
+                    %ROC curve for 
+                    %$(\eta,p_T) = (1.8,40)$~\ref{fig:ROC1840}, 
+                    %$(\eta,p_T) = (1.8,60)$~\ref{fig:ROC1860}, 
+                    %$(\eta,p_T) = (1.8,80)$~\ref{fig:ROC1880}, 
+                    %Various WP are also ploted alongside,
+                    %Tight in blue and HLT at FastReco in green.
+                    %}
+                %}
+    %\end{figure}
+%\end{frame}
+
+%\begin{frame}{Extra Slides}
+    %\framesubtitle{Binned ROC curves}
+    %\begin{figure}[h!]
+    %\label{fig:ROC13}
+        %\centering
+        %\begin{subfigure}[b]{.35\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/Val_output/plots/eta2.0xpT10.0_outROC.png}
+            %\caption{~}
+            %\label{fig:ROC2010}
+        %\end{subfigure}
+        %\hfill
+        %\begin{subfigure}[b]{.35\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/Val_output/plots/eta2.0xpT20.0_outROC.png}
+            %\caption{~}
+            %\label{fig:ROC2020}
+        %\end{subfigure}
+        %\hfill
+        %\begin{subfigure}[b]{.35\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/Val_output/plots/eta2.0xpT30.0_outROC.png}
+            %\caption{~}
+            %\label{fig:ROC2030}
+        %\end{subfigure}
+        %\caption{%
+                %\textit{%
+                    %ROC curve for 
+                    %$(\eta,p_T) = (2.0,10)$~\ref{fig:ROC2010}, 
+                    %$(\eta,p_T) = (2.0,20)$~\ref{fig:ROC2020}, 
+                    %$(\eta,p_T) = (2.0,30)$~\ref{fig:ROC2030}, 
+                    %Various WP are also ploted alongside,
+                    %Tight in blue and HLT at FastReco in green.
+                    %}
+                %}
+    %\end{figure}
+%\end{frame}
+
+%\begin{frame}{Extra Slides}
+    %\framesubtitle{Binned ROC curves}
+    %\begin{figure}[h!]
+    %\label{fig:ROC14}
+        %\centering
+        %\begin{subfigure}[b]{.35\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/Val_output/plots/eta2.0xpT40.0_outROC.png}
+            %\caption{~}
+            %\label{fig:ROC2040}
+        %\end{subfigure}
+        %\hfill
+        %\begin{subfigure}[b]{.35\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/Val_output/plots/eta2.0xpT60.0_outROC.png}
+            %\caption{~}
+            %\label{fig:ROC2060}
+        %\end{subfigure}
+        %\hfill
+        %\begin{subfigure}[b]{.35\textwidth}
+            %\centering
+            %\includegraphics[width=\textwidth]{images/20201201_48x2CL_128x1DL_0.30dr_150Ep_1.0e-03lr_Generator/Val_output/plots/eta2.0xpT80.0_outROC.png}
+            %\caption{~}
+            %\label{fig:ROC2080}
+        %\end{subfigure}
+        %\caption{%
+                %\textit{%
+                    %ROC curve for 
+                    %$(\eta,p_T) = (2.0,40)$~\ref{fig:ROC2040}, 
+                    %$(\eta,p_T) = (2.0,60)$~\ref{fig:ROC2060}, 
+                    %$(\eta,p_T) = (2.0,80)$~\ref{fig:ROC2080}, 
+                    %Various WP are also ploted alongside,
+                    %Tight in blue and HLT at FastReco in green.
+                    %}
+                %}
+    %\end{figure}
+%\end{frame}
+
+%\begin{frame}{Update on the package}
+    %\begin{itemize}
+        %\item (DONE)
+            %cleaning, documenting simplifying the package, to improve both readablity and mantainability.
+            %to run the whole package from a config file.
+        %\item (ONGOING) 
+            %made progress on testing running @grid.
+            %Two arguments motivate this implementation,
+            %one is the access to more resourses like RAM and CPU power that would allow to train on much bigger samples,
+            %and the second one is the natural integration with ATLAS workflow and frameworks.
+        %\item (ONGOING)
+            %integration with ONNX.
+    %\end{itemize}
+%\end{frame}
+
+%\begin{frame}
+    %\frametitle{Details of the package structural changes}
+    %\begin{itemize}
+        %\item (new) computing of ROC-curves with uncertainties, more info \href{https://gitlab.cern.ch/snoaccor/roc_witherrorbars}{here}
+    %\end{itemize}
+%\end{frame}
+
+%\begin{frame}{Samples}
+    %\textbf{Data}
+    %\begin{itemize}
+        %\item Data from \href{https://gitlab.cern.ch/snoaccor/CellDumpingPackage}{CellDumpingPackage}(subsample to run locally).
+            %Only keeping events in Barrel.
+        %\item Signal is Passed ZRad selection, Background is reverse ETcone20 isolation.
+    %\end{itemize}
+%\end{frame}
+
+
+
+%\begin{frame}{Preformance of model in MCData}
+    %\begin{figure}[h!]
+        %\centering
+        %\includegraphics[width = 0.7\textwidth]{images/roc_curves/plots/ROC_Inclusive.png}
+        %\caption{%
+            %\textit{%
+                %AUC matrix where each cell/element contains the AUC of the ROC curve that corresponds to the pair $(\eta,p_t)$.
+            %Performance of the model trained on MC data,
+            %}
+        %}
+        %\label{fig:Performance}
+    %\end{figure}   	
+%\end{frame}
+
+%\begin{frame}{Preformance of model in MCData}
+    %\begin{figure}[h!]
+        %\centering
+        %\includegraphics[width = 0.7\textwidth]{images/roc_curves/plots/full_outROC.png}
+        %\caption{%
+            %\textit{%
+            %The inclusive ROC curve in $(\eta,p_T)$,
+            %Various WP are also ploted alongside,
+            %Tight in blue and HLT at FastReco in green.
+            %}
+        %}
+        %\label{fig:Performance}
+    %\end{figure}   	
+%\end{frame}
+
+%\section{Section Two}
+
+%\begin{frame}{Slide with table}
+	%\input{tables/table1.tex}
+%\end{frame}
+
+
+%\begin{frame}{Slide with references}
+	%This is to reference a figure (Figure \ref{fig:figure1})\\
+    %This it to reference a table (Table \ref{tab:table1})\\
+    %This is to cite an article \cite{Ahmed2018a}\\
+    %This is to add an article to the references without mentioning in the text \nocite{Ahmed2018a}\\
+%\end{frame}
+%\section{References}
+
+%% Adding the option 'allowframebreaks' allows the contents of the slide to be expanded in more than one slide.
+%\begin{frame}[allowframebreaks]{References}
+	%\tiny\bibliography{references}
+	%\bibliographystyle{apalike}
+%\end{frame}
+
+\end{document}

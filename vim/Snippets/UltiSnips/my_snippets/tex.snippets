@@ -2,10 +2,17 @@
 # == MOST USEFUL == %
 # Default packages
 snippet default_pkgs
+% -- language
+\\usepackage[english]{babel}
+%\\usepackage[spanish]{babel}
+% -- encoding
+\\usepackage[utf8x]{inputenc}			
+\\usepackage[T1]{fontenc}
 % -- graphics
 \\usepackage{graphix}
 \\usepackage{caption}
 \\usepackage{subcaption}
+\usepackage{eso-pic}
 % -- math
 \usepackage{amsmath}
 % -- cross-referencing
@@ -13,7 +20,7 @@ snippet default_pkgs
 \\hypersetup{%
 	colorlinks=true,
 	linkcolor=blue,
-	filecolor=magenta,      
+	filecolor=gray,      
 	urlcolor=cyan,
 }
 endsnippet
@@ -22,37 +29,37 @@ endsnippet
 snippet _fig
 \\begin{figure}[h!]
 	\\centering
-	\\includegraphics[width = ${1:{VISUAL}}\textwidth]{${0:{path to image}}}
+	\\includegraphics[width = ${2:{VISUAL}}\textwidth]{${1:{path to image}}}
 	\\caption{%
 		\\textit{%
-		${3}
+			${4}
+			}
 		}
-	}
-	\\label{fig:${2}}
+	\\label{fig:${3}}
 \\end{figure}
 ${4}
 endsnippet
 snippet _twofig
 \\begin{figure}[h!]
 	\\centering
-	\\begin{subfigure}[b]{${1:{VISUAL}}\textwidth}
+	\\begin{subfigure}[b]{${2:{VISUAL}}\textwidth}
 		\\centering
-		\\includegraphics[width=\textwidth]{${0:{path to image}}}
+		\\includegraphics[width=\textwidth]{${1:{path to image}}}
 		\\caption{~}
-		\\label{subfig:${2}}
+		\\label{subfig:${3}}
 	\\end{subfigure}
 	\\hfill
-	\\begin{subfigure}[b]{$1}\textwidth}
+	\\begin{subfigure}[b]{$2\textwidth}
 		\\centering
-		\\includegraphics[width=\textwidth]{${3:{path to image}}}
+		\\includegraphics[width=\textwidth]{${4:{path to image}}}
 		\\caption{~}
-		\\label{subfig:${4}}
+		\\label{subfig:${5}}
 	\\end{subfigure}
 	\\caption{%
 			\\textit{%
-			${5}
+			${6}
 			}
-	\\label{fig:${6}}
+	\\label{fig:${7}}
 	}
 \\end{figure}
 endsnippet
@@ -88,12 +95,12 @@ endsnippet
 #  -- Itemize
 snippet _item "itemize environment"
 \\begin{itemize}
-	\\item 
+	\\item [-]
 		${0}
 \\end{itemize}
 endsnippet
 snippet it "\item"
-\\item 
+\\item [-]
 	${1:${VISUAL}}
 endsnippet
 #  -- Chapter
@@ -152,13 +159,16 @@ snippet href
 endsnippet
 # Formating text: italic, bold, code
 snippet tit "italic text"
-\\textit{${1:${VISUAL:text}}}${0}
+\\textit{${1:${VISUAL}}}${0}
 endsnippet
 snippet tbf "bold face text"
-\\textbf{${1:${VISUAL:text}}}${0}
+\\textbf{${1:${VISUAL}}}${0}
 endsnippet
 snippet ttt "code text"
-\\texttt{${1:${VISUAL:text}}}${0}
+\\texttt{${1:${VISUAL}}}${0}
+endsnippet
+snippet tcl "color text"
+\\textcolor{${2:${color}}}{${1:${text}}}${0}
 endsnippet
 # Math
 snippet frac "\frac{}{}"

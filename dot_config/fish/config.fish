@@ -2,10 +2,17 @@
 
 # -- Settings --
 set PATH usr/local/bin /usr/sbin $PATH
+
+#set -gx TERMINAL xfce4-terminal #alacritty
+#set -gx TERM xfce4-terminal #alacritty
+#set -gx TERMINAL alacritty
+#set -gx TERM alacritty
+
+
 set -gx EDITOR nvim
 #set -U VISUAL nvim
 set -U READER okular
-set -U TERMINAL xfce4-terminal #alacritty
+
 #set -U BROWSER chromium 
 set -U BROWSER firefox 
 #set -Ux $XDG_CACHE_HOME .cache
@@ -13,6 +20,8 @@ set -U BROWSER firefox
 # (Un)comment to change where to look for .vimrc
 set -x VIMINIT 'let $MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc" | source $MYVIMRC'
 
+set -x GITHUB_USER 'santinoacco'
+set -x GITLAB_USER 'snoaccor'
 
 # -- Funcions --
 function lS
@@ -45,6 +54,6 @@ abbr cplx scp snoaccor@lxplus.cern.ch:~/
 #
 abbr tar tar cvzf
 abbr untar tar -xvf
-abbr unzip z7 e
+abbr unzip 7z e
 
 abbr pacS sudo pacman -Syu

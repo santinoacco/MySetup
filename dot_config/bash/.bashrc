@@ -9,6 +9,9 @@ export HISTCONTROL=ignoreboth           # avoid duplicates
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_CONFIG_HOME="$HOME/.config"
 
+export GITHUB_USER="santinoacco"
+export GITLAB_USER="snoaccor"
+
 # --this works
 #export VIMINIT='let $MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc" | source $MYVIMRC'
 

@@ -8,7 +8,6 @@ import ROOT as r
 from array import array
 #import SwanImports
 
-
 import argparse
 def config_Parse():
     """
@@ -36,6 +35,28 @@ def build_dir(Dir_name,File_name,Extension):
     outfile = join(Dir_name,File_name+Extension)
     return outfile
 
+def get_errorbars_from_npHisto(histo,yerr):
+    """
+    given a NumPy histogram and errors array will return the coordinates ready to be use in a plt.errorbar
+    """
+    values, bin_edges = histo
+    # 20 bins -> 21 edges
+    xL = bin_edges[:-1]
+    xH = bin_edges[1:]
+    # bin center is at (bin[i] + bin[i+1])/2 + bin[i],
+    # since it's increasing order.
+    xC = bin_edges[:-1] + np.diff(bin_edges)/2
+    if len(values)==len(yerr):
+        # then errors are simetric.
+        yL = values - yerr/2
+        yH = values + yerr/2
+    else:
+        raise NotImplementedError
+
+    Xvalues = (xL,xC,xH)
+    Yvalues = (yL,values,yH)
+    return Xvalues, Yvalue
+
 # ===== ROOT ===== #
 def createT1(name, bins):
     """
@@ -50,6 +71,26 @@ def createT1(name, bins):
 
 def mROOT_style():
     pass
+
+def npHisto2TH1F(np_histo,errors,name,debug=False):
+    """takes values(counts) and bin-edges to return a ROOT.TH1F obj"""
+    # -- check type
+    # assert isinstance(np_histo,np.histogram)
+    # get values, bin-edges
+    values, bins = np_histo
+    nbins = len(bins)
+    # -- init TH1F
+    out_th1f = ROOT.TH1F(name, # name
+                         name, # title
+                         nbins,# number of bins
+                         bins  # bin edges
+                        )
+    for b in range(nbins-1):
+        out_th1f.SetBinContent(b,values[b])
+        if debug:
+            print(f"Filling bin {b} with value {th1f_A.GetBinContent(b)}")
+
+    return out_th1f
 
 # IN PROGRESS:
 def mTplot(TObject):
@@ -119,3 +160,10 @@ def append_to_excel(dict_of_DF, file_to_write, sheetname, last_month_loaded):
     writer.save()
     print(f'>>> Successfully loaded data to {file_to_write}')
     return
+
+def extract_tren(x,method):
+    """
+    Use the `method` to extract the trend from a TimeSerie x.
+    method: "moving_avg", "wgt_moving_avg","center_moving_avg", "fft_decomp"
+    """
+    pass

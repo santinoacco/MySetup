@@ -3,7 +3,8 @@ snippet header "standard Vim script file header"
 	" Author: ${2:`g:snips_author`}
 	" Description: ${3}
 	${0:" Last Modified: `strftime("%B %d, %Y")`}
-snippet guard script reload guard
+endsnippet
+snippet guard "script reload guard"
 	if exists('${1:did_`vim_snippets#Filename()`}') || &cp${2: || version < 700}
 		finish
 	endif
@@ -13,6 +14,7 @@ snippet f "function"
 	fun! ${1:`expand('%') =~ 'autoload' ? substitute(matchstr(expand('%:p'),'autoload/\zs.*\ze.vim'),'[/\\]','#','g').'#' : ''`}${2:function_name}(${3})
 		${0}
 	endf
+endsnippet
 snippet t try ... catch statement
 	try
 		${1:${VISUAL}}

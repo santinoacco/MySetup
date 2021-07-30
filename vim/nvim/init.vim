@@ -384,6 +384,7 @@ endif
 "ActivateAddons vim-snippets UltiSnips
 " Snippets engine (UltiSnips) ------------------------------
     let g:UltiSnipsExpandTrigger="<tab>"
+    "let g:UltiSnipsExpandTrigger="<c-tab>"
     let g:UltiSnipsJumpForwardTrigger="<c-b>"
     let g:UltiSnipsJumpBackwardTrigger="<c-z>"
     "let g:UltiSnipsSnippetDirectories=['UltiSnips', '$HOME/.config/nvim/my_snippets']

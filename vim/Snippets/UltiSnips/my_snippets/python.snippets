@@ -388,6 +388,10 @@ endsnippet
 snippet a=
 	self.assertEqual(${0}, ${1})
 endsnippet
+snippet assertType "checks type of var."
+assert isinstance(${1:var},${2:type}), "Provide $1 as $2"
+${0}
+endsnippet
 # test function/method
 snippet test
 	def test_${1:description}(${2:`indent('.') ? 'self' : ''`}):
