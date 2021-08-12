@@ -29,6 +29,9 @@ git log
 # Para actualizar upstream de un fork
 `git pull <upstream_url> <branch>`
 
+# Para hacer un checkout a rama remota
+git checkout --track <remote_branch>
+
 # Utilizar Submodules
 
 # New Branch for Athena
