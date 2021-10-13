@@ -183,7 +183,7 @@ endsnippet
 snippet add_dinamichisto "Loads my default Python 1D Histogram Interactive"
 endsnippet
 
-#****** PyROOT *****#
+#****** PyROOT ******#
 snippet ini_xaod "in a lxplus env, sets to load xAOD"
 r.xAOD.Init().ignore()
 endsnippet
@@ -200,7 +200,16 @@ endsnippet
 snippet _TH1F "TH1F template" b
 h_${1} = r.TH1F('$1','$1',${2:nbins},${3:min_bin},${4:max_bin})
 endsnippet
-
+#****** PySpark ******#
+snippet initSpark "starts pySpark session"
+from pyspark.sql import SparkSession
+spark = SparkSession.builder.appName("${1:NAME}").getOrCreate()
+$0
+endsnippet
+snippet readcsvSpark
+spark.read.option(${2:READING_OPTIONS}).csv(${1:PATH},inferSchema=True)
+$0
+endsnippet
 
 #*************************************************************#
 #************************ LESS USEFUL ************************#

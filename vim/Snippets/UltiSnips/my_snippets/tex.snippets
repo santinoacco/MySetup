@@ -155,7 +155,7 @@ snippet url
 \\url{${1}} ${0}
 endsnippet
 snippet href
-\\href{${1}}{${2}} ${0}
+\\href{${1:url}}{${2:text}} ${0}
 endsnippet
 # Formating text: italic, bold, code
 snippet tit "italic text"
@@ -225,7 +225,19 @@ endsnippet
 snippet ww "omega"
 \\omega
 endsnippet
-
+# Comments
+snippet todo "TODO flag"
+\\textcolor{purple}{TODO}
+endsnippet
+snippet done "DONE flag"
+\\textcolor{green}{DONE}
+endsnippet
+snippet ongoing "ONGOING flag"
+\\textcolor{orange}{ON-GOING}
+endsnippet
+snippet issue "ISSUE flag"
+\\textcolor{red}{ISSUE}
+endsnippet
 # ================= %
 
 #PREAMBLE
@@ -528,9 +540,12 @@ snippet example "exampleblock environment"
 endsnippet
 snippet col2 "two-column environment"
 \\begin{columns}
+	% left col
 	\\begin{column}{0.5\\textwidth}
 		${1}
 	\\end{column}
+
+	% right col
 	\\begin{column}{0.5\\textwidth}
 		${0}
 	\\end{column}

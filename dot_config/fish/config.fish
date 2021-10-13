@@ -37,7 +37,7 @@ function v
 end
 
 function vidx
-    v ~/VimWiki/index.md
+    v ~/BookShelf/VimWiki/index.md
 end
 
 

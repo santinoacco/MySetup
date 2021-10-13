@@ -324,10 +324,11 @@ end
 " -Hybrid line numbers on/off
     nnoremap<silent> <leader>nu :setlocal nu! rnu!<CR>
 " -Spelling mistake
-    "  -- spanish
+    "  -- spanis
     nnoremap<silent> <leader>es :set spell! spelllang=es<CR>
     "  -- english
     nnoremap<silent> <leader>en :set spell! spelllang=en_us<CR>
+
 " -Mapping Paste Mode on/off
     "nnoremap <F5> :set paste <CR><ESC>
     nmap <F5> :set paste<CR><ESC>
