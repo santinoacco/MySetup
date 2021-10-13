@@ -23,6 +23,12 @@ snippet default_pkgs
 	filecolor=gray,      
 	urlcolor=cyan,
 }
+% -- Strikeout text
+\usepackage{ulem}
+\colorlet{shadowgreen}{green!40}
+\colorlet{shadowblue}{blue!40}
+\colorlet{lightgray}{gray!70}
+
 endsnippet
 # Environments
 #  -- Figures
@@ -237,6 +243,21 @@ snippet ongoing "ONGOING flag"
 endsnippet
 snippet issue "ISSUE flag"
 \\textcolor{red}{ISSUE}
+endsnippet
+# StrikeOut
+snippet sout "strike out text"
+\\sout{ \textcolor{lightgray}{${1:${VISUAL}}} ${0}
+endsnippet
+# Physics
+snippet met "missing E_T symbol"
+\$E_T^{miss}$
+endsnippet
+snippet pt "P_T symbol"
+\$p_T$
+endsnippet
+# Custom Commands
+snippet todocmd "set todo command"
+\\newcommand{\todo}{ \textcolor{purple}{TODO} } 
 endsnippet
 # ================= %
 
