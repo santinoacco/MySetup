@@ -15,7 +15,7 @@
 set nocompatible              " be iMproved, required
 "filetype off                  " required
 " -- Change the following to use COC.
-let use_coc=0
+let use_coc=1
 
 
 let vim_plug_path = expand('$HOME/.config/nvim/autoload/plug.vim')
@@ -136,6 +136,7 @@ endif
     noremap <silent> <C-Right> :vertical resize +3<CR>
     noremap <silent> <C-Up> :resize +3<CR>
     noremap <silent> <C-Down> :resize -3<CR>
+    noremap <silent> <C-SDown> :resize -3<CR>
 
 " ----> PLugins config
 "  *Markdown Preview* ----------------------------- 
@@ -147,6 +148,7 @@ endif
     map <Leader>md :InstantMarkdownPreview<CR>   
     " Kills the preview
     map <Leader>ms :InstantMarkdownStop<CR>      
+
 
 " *NERDTree* ----------------------------- 
     " toggle nerdtree display
@@ -387,7 +389,7 @@ endif
     "let g:UltiSnipsExpandTrigger="<c-tab>"
     let g:UltiSnipsJumpForwardTrigger="<c-b>"
     let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-    "let g:UltiSnipsSnippetDirectories=['UltiSnips', '$HOME/.config/nvim/my_snippets']
+    let g:UltiSnipsSnippetDirectories=['UltiSnips', '$HOME/.config/nvim/my_snippets']
     "let g:UltiSnipsSnippetDirectories=["UltiSnips", '~/.config/nvim/my_snippets']
     let g:UltiSnipsSnippetDirectories=["UltiSnips", 'my_snippets']
     let g:UltiSnipsEnableSnipMate=1
