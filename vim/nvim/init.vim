@@ -132,11 +132,14 @@ endif
 " -Open terminal
     map <Leader>t :vnew term://fish<CR>
 " -Make adjusing split sizes a bit more friendly
-    noremap <silent> <C-Left> :vertical resize -3<CR>
-    noremap <silent> <C-Right> :vertical resize +3<CR>
-    noremap <silent> <C-Up> :resize +3<CR>
-    noremap <silent> <C-Down> :resize -3<CR>
-    noremap <silent> <C-SDown> :resize -3<CR>
+    "noremap <silent> <C-Left> :vertical resize -3<CR>
+    "noremap <silent> <C-Right> :vertical resize +3<CR>
+    "noremap <silent> <C-Up> :resize +3<CR>
+    "noremap <silent> <C-Down> :resize -3<CR>
+    noremap <silent> <C-S-Left> :vertical resize -3<CR>
+    noremap <silent> <C-S-Right> :vertical resize +3<CR>
+    noremap <silent> <C-S-Up> :resize +3<CR>
+    noremap <silent> <C-S-Down> :resize -3<CR>
 
 " ----> PLugins config
 "  *Markdown Preview* ----------------------------- 

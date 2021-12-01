@@ -89,64 +89,64 @@ APRENDIZAJE HASTA AHORA DE PRUN
 
 # RUCIO:
 
->> quiero subir un dataset que se encuentra en /eos/.../mobelfki/.../Bkg, contiene los archivos que voy a usar para obtener eventos de Background para entrenar.
-Esto lo estaria guardando en mi espacio personal bajo el nombre 'user.snoaccor.NewPhotonIDSamples_FF.Bkg'
-" rucio upload --rse MY_SCRATHDISK /eos/user/m/mobelfki/NewPhotonIDSamples_FF/Bkg/ --scope user.snoacor.NewPhotonIDSamples_FF.Bkg "
+    >> quiero subir un dataset que se encuentra en /eos/.../mobelfki/.../Bkg, contiene los archivos que voy a usar para obtener eventos de Background para entrenar.
+    Esto lo estaria guardando en mi espacio personal bajo el nombre 'user.snoaccor.NewPhotonIDSamples_FF.Bkg'
+    " rucio upload --rse MY_SCRATHDISK /eos/user/m/mobelfki/NewPhotonIDSamples_FF/Bkg/ --scope user.snoacor.NewPhotonIDSamples_FF.Bkg "
 
-rucio upload --rse AGLT2_SCRATCHDISK /eos/user/m/mobelfki/NewPhotonIDSamples_FF/Bkg/ --scope user.snoaccor:NewPhotonIDSamples_FF.Bkg
+    rucio upload --rse AGLT2_SCRATCHDISK /eos/user/m/mobelfki/NewPhotonIDSamples_FF/Bkg/ --scope user.snoaccor:NewPhotonIDSamples_FF.Bkg
 
-> then close it:
-rucio close user.snoaccor:NewPhotonIDSamples_FF.Bkg
+    > then close it:
+    rucio close user.snoaccor:NewPhotonIDSamples_FF.Bkg
 
-> to show all your DIDs
-rucio list-dids user.snoaccor:*
+    > to show all your DIDs
+    rucio list-dids user.snoaccor:*
 
 
 
-TESTS ON RUNNING NTUPLE AT GRID:
-"
-prun --exec "NTuple/run/run.sh" --inDS=user.snoaccor:NewPhotonIDSamples_FF.Bkg --outDS=user.snoaccor.NTupleGridRun_Test
-" --> failed to upload source files iwth 255
-"
-source rcSetup.sh;
-cd src/NTuple/run;
-prun --exec "runCleanAndGet %IN %OUT 1 0 0 DiJet" --inDS=user.snoaccor:NewPhotonIDSamples_FF.Bkg --outDS=user.snoaccor.NTupleGridRun_Test
-"--> build successfully, run failed!
-id:22941360
+    TESTS ON RUNNING NTUPLE AT GRID:
+    "
+    prun --exec "NTuple/run/run.sh" --inDS=user.snoaccor:NewPhotonIDSamples_FF.Bkg --outDS=user.snoaccor.NTupleGridRun_Test
+    " --> failed to upload source files iwth 255
+    "
+    source rcSetup.sh;
+    cd src/NTuple/run;
+    prun --exec "runCleanAndGet %IN %OUT 1 0 0 DiJet" --inDS=user.snoaccor:NewPhotonIDSamples_FF.Bkg --outDS=user.snoaccor.NTupleGridRun_Test
+    "--> build successfully, run failed!
+    id:22941360
 
-TESTS ON RUNNING NTUPLETOIMAGE AT GRID:
-"
-prun --exec "python3 NTupleToImage.py -i /eos/user/s/snoaccor/Projects/cnn_ph_id/outputs/NTuple/Bkg/output_Strategy_IsoTight_1_DiJet.root -o %OUT -f features_ex.txt -s samples.txt" --outDS user.snoaccor.CnnPhID_DataProcessing_singlefile_Bkgtest --extFile /eos/user/s/snoaccor/Projects/cnn_ph_id/outputs/NTuple/Bkg/output_Strategy_IsoTight_1_DiJet.root
-"-->
-"
-INFO : gathering files under /afs/cern.ch/work/s/snoaccor/projects/cnn-photon-id/src/DataProcessing
-INFO : upload source files
-ERROR: Could not check Sandbox duplication with 7
-ERROR : failed to upload source files with 255
-"
+    TESTS ON RUNNING NTUPLETOIMAGE AT GRID:
+    "
+    prun --exec "python3 NTupleToImage.py -i /eos/user/s/snoaccor/Projects/cnn_ph_id/outputs/NTuple/Bkg/output_Strategy_IsoTight_1_DiJet.root -o %OUT -f features_ex.txt -s samples.txt" --outDS user.snoaccor.CnnPhID_DataProcessing_singlefile_Bkgtest --extFile /eos/user/s/snoaccor/Projects/cnn_ph_id/outputs/NTuple/Bkg/output_Strategy_IsoTight_1_DiJet.root
+    "-->
+    "
+    INFO : gathering files under /afs/cern.ch/work/s/snoaccor/projects/cnn-photon-id/src/DataProcessing
+    INFO : upload source files
+    ERROR: Could not check Sandbox duplication with 7
+    ERROR : failed to upload source files with 255
+    "
 
-"
-cd DataProcessing/NTupleToImage;
-cp <file.root> .;
-prun --exec "python3 NTupleToImage.py -i <file.root> -o %OUT -f features_ex.txt -s samples.txt" \
---outDS user.snoaccor.CnnPhID_DataProcessing_singlefile_Bkgtest --extFile <file.root>
-"--> job failed, it also ran python2 instead of 3.
+    "
+    cd DataProcessing/NTupleToImage;
+    cp <file.root> .;
+    prun --exec "python3 NTupleToImage.py -i <file.root> -o %OUT -f features_ex.txt -s samples.txt" \
+    --outDS user.snoaccor.CnnPhID_DataProcessing_singlefile_Bkgtest --extFile <file.root>
+    "--> job failed, it also ran python2 instead of 3.
 
-TODO TEST
-"
-cd DataProcessing/NTupleToImage;
-cp <file.root> .;
-prun --exec "python3 NTupleToImage.py -i <file.root> -o %OUT -f features_ex.txt -s samples.txt" \
---outDS user.snoaccor.CnnPhID_DataProcessing_singlefile_Bkgtest --extFile <file.root> --outputs Lr1.npy,Lr2.npy,Lr3.npy,Y.npy,Z.h5 --forceStaged
-"--> job failed, it also ran python2 instead of 3.
+    TODO TEST
+    "
+    cd DataProcessing/NTupleToImage;
+    cp <file.root> .;
+    prun --exec "python3 NTupleToImage.py -i <file.root> -o %OUT -f features_ex.txt -s samples.txt" \
+    --outDS user.snoaccor.CnnPhID_DataProcessing_singlefile_Bkgtest --extFile <file.root> --outputs Lr1.npy,Lr2.npy,Lr3.npy,Y.npy,Z.h5 --forceStaged
+    "--> job failed, it also ran python2 instead of 3.
 
-also test the use of --inOutDsJson: where you can use a json file to specify the input and output files
+    also test the use of --inOutDsJson: where you can use a json file to specify the input and output files
 
-"
-[snoaccor@lxplus719 cnn-photon-id]$ prun --exec "python3 src/DataProcessing/NTupleToImage.py -i src/DataProcessing/ -o %OUT -s src/DataProcessing/samples.txt -f src/DataProcessing/features_ex.txt" --outDS user.snoaccor.CnnPhID_DataProcessing_singlefile_Bkgtest --extFile output_Strategy_IsoTight_1_DiJet_500000.root --outputs Lr1.npy,Lr2.npy,Lr3.npy,Y.npy,Z.h5 --forceStaged
-"
+    "
+    [snoaccor@lxplus719 cnn-photon-id]$ prun --exec "python3 src/DataProcessing/NTupleToImage.py -i src/DataProcessing/ -o %OUT -s src/DataProcessing/samples.txt -f src/DataProcessing/features_ex.txt" --outDS user.snoaccor.CnnPhID_DataProcessing_singlefile_Bkgtest --extFile output_Strategy_IsoTight_1_DiJet_500000.root --outputs Lr1.npy,Lr2.npy,Lr3.npy,Y.npy,Z.h5 --forceStaged
+    "
 
- TODO test using a bash script
+     TODO test using a bash script
  
  
  
@@ -264,3 +264,21 @@ to create your own branch in your fork you need to:
 3. asetup master,Athena,2021-06-11T2101
 4. git checkout "$AtlasReleaseType/$AtlasBuildBranch/$AtlasBuildStamp"
 5. git switch -c <new-branch-name>      # so that you make a new branch for your changes with that reklease.
+
+
+
+# Panda
+
+- To retry a given task with ID: X, for example 2453221:
+    - lsetup panda
+    - pbook
+    - retry(X)
+- To force to retry avoiding an specific site:
+    - find the site where it failed:
+        - go to MyBigPanda
+        - select the job that failed, click the taskID.
+        - in the table look at the columns Build and Run.
+        - where it failed should be a '1', click that '1'.
+        - in the poped window look for 'computingsite'.
+        - that site is the one to exclude, we will call it <site_to_exclude>.
+    - retry(X,, newOpts={'excludedSite':['<site_to_exclude_1>','<site_to_exclude_2>']})

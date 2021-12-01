@@ -582,6 +582,15 @@ def __unicode__(self):
 	${3:pass}
 endsnippet
 
+# time profiling
+snippet timeit "time profile"
+import time
+start = time.perf_counter()
+end = time.perf_counter()
+total = end - start
+endsnippet
+
+
 # note: reflected operands and augmented arithmeitc assignements have been
 # intentionally ommited to reduce verbosity.
 snippet numeric "methods for emulating a numeric type" b
