@@ -136,8 +136,8 @@ endif
     "noremap <silent> <C-Right> :vertical resize +3<CR>
     "noremap <silent> <C-Up> :resize +3<CR>
     "noremap <silent> <C-Down> :resize -3<CR>
-    noremap <silent> <C-S-Left> :vertical resize -3<CR>
-    noremap <silent> <C-S-Right> :vertical resize +3<CR>
+    noremap <silent> <C-S-Right> :vertical resize -3<CR>
+    noremap <silent> <C-S-Left> :vertical resize +3<CR>
     noremap <silent> <C-S-Up> :resize +3<CR>
     noremap <silent> <C-S-Down> :resize -3<CR>
 
