@@ -11,4 +11,6 @@
     - cmd + T : new tab
     - comd + N : new window
     
+## Setup TensorFlow for M1
 
+- follow [this link](https://www.youtube.com/watch?v=_1CaUOHhI6U)
