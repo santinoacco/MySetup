@@ -12,6 +12,8 @@
     * [Phylosophy](Notes/Phylosophy/index.md)
     * [Filosofia_Cientifica](Filosofia_Cientifica)
     * [Forecasting](Note/Forecasting/index.md)
+    * [ETL](Notes/ETL/index.md)
+    * [Docker](Notes/Docker/index.md)
 
 ## Tasks
     * [matplotlibSetup](Tasks/Tutoriales/matplotlibSetup)
