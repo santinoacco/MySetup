@@ -14,6 +14,9 @@
     * [Forecasting](Note/Forecasting/index.md)
     * [ETL](Notes/ETL/index.md)
     * [Docker](Notes/Docker/index.md)
+    * [Git](Notes/Git/index.md)
+    ### Finance
+        * 
 
 ## Tasks
     * [matplotlibSetup](Tasks/Tutoriales/matplotlibSetup)
@@ -24,7 +27,7 @@
     * [Python](Programming/Python/index.md)
     * ROOT
 
-## Proyects documentation
+## Projects documentation
     * [AferesisStudy](Proyect_doc/AferesisStudy/index.md)
     * [App_MisGastos](Proyect_doc/App_MisGastos/index.md)
     * [analysis_PhsIdUsingCNN_UNLP](Proyect_doc/analysis_PhsIdUsingCNN_UNLP/index.md)
