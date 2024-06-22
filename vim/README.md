@@ -11,3 +11,6 @@ To set my configuration I do the following:
 
 All my snippets are defined in the `Snippets` folder
 
+# Notes
+
+-   the current `<leader> = \`.
