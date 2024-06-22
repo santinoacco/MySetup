@@ -14,3 +14,5 @@ All my snippets are defined in the `Snippets` folder
 # Notes
 
 -   the current `<leader> = \`.
+-   many configs syntax depend on the pluggin-manager,
+    currently we are using `coc`.
