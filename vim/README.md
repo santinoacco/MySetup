@@ -45,7 +45,7 @@ All my snippets are defined in the `Snippets` folder
 
 # Notes
 
--   [Commands CheatSheet](../../CheatSheets/VimCheatSheet.md)
+-   [Commands CheatSheet](../CheatSheets/VimCheatSheet.md)
 
 -   the current `<leader> = \`.
 -   to comment use `gc`
