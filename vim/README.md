@@ -1,18 +1,23 @@
 # Setup
 
-It's important to keep in mind that the plugin-manager is a key factor in the syntax.
+(Neo)Vim on its own is quite powerful,
+but there are powerful plugins out there that make the experience much smoother.
+For that reason the `plugin-manager` impacts quite heavily the setup process.
 
 ## NeoVim
 
+-   make executable `lua_nvim_setup.sh` and run it  
 1.  Create a `nvim` dir in `.config`:
     >   `cd ~/.config && mkdir nvim && cd nvim;`
 
 ### Lua
 
+
 2.	Paste (or create) the `init.lua` file inside `.config/nvim/`,
 	which acts as the `vimrc` classical file.
 3.	Note we're using `lazy.nvim` plugin-manager, 
-	since others are not longer maintanined (like `packer`)
+	since others are not longer maintanined (like `packer`).
+    Update `lazy.nvim` using: ``
 
 My personal configuration is under the `lua` directory at `lua/santinoacco`.
 Inside it we find:
@@ -20,26 +25,54 @@ Inside it we find:
     a.  `options`: base config of vim
     b.  `keymaps`: for key custom keymaps	
     c.	`colorscheme`: for the custom colorsequences.
-2.  `plugins` contains the installed plugins.
+2.  `plugins` contains the installed plugins:
+    1.  To add a new plugin:
+        1.  create a new file `plugins/<plugin-name>.lua`
+        2.  inside file from 1) return a lua table:
+            ```lua
+            return {
+                "plugin-url",
+                name = "plugin-name",
+                config = function() <your_vim_plugin_config> end
+            }
+            ```
+    2.  Configurations specified in Vim as `let g:<PlugOption>=<value>` translate to:
 
+#### Reference
 
-## How to setup vim config
+-   YouTube:
+    -   https://www.youtube.com/watch?v=zHTeCSVAFNY&list=PLsz00TDipIffreIaUNk64KxTIkQaGguqn
+
+## Vim 
+How to setup vim config
 
 The `vimrc` file located here is my goto vimrc file.
 To set my configuration I do the following:
-1. clone repo
+1. clone repo:
+```shell
+cd ~;
+g clone <this_repo>
+```
 2. create a .config/vim folder
+```shell
+cd ~/.config && mkdir vim;
+```
 3. link my this pkg `vimrc` into the .config/vim folder.
+```shell
+```
 
 # Capabilities
 
--   Autocompletion
+-   Autocompletion >> Language Server Protocol [LSP Zero]()
 -   Snippets support
--   Markdown autorendering
+-   Markdown autorendering >> [Markdown Preview](https://github.com/iamcco/markdown-preview.nvim)
 -   LaTex autorendering
+-   Code folding
+-   File tree >> [Neo Tree](https://github.com/nvim-neo-tree/neo-tree.nvim)
+-   ? Fuzzy finder >> [Telescope](https://github.com/nvim-telescope/telescope.nvim)
 
 
-# How to setup Snippets
+# How to set up Snippets
 
 All my snippets are defined in the `Snippets` folder
 
@@ -47,7 +80,7 @@ All my snippets are defined in the `Snippets` folder
 
 -   [Commands CheatSheet](../CheatSheets/VimCheatSheet.md)
 
--   the current `<leader> = \`.
--   to comment use `gc`
+-   The default `<leader> = \`, current is `<leader> = " "`.
+-   To comment use `gc`
 -   many configs syntax depend on the pluggin-manager,
     currently we are using `coc`.
