@@ -3,22 +3,23 @@ alias g='git'
 alias gS='git status'
 alias gA='git add -A'
 alias gC='git commit -am'
-alias gPom='git push origin master'
 
 
 alias cp="cp -i"                        # confirm before overwriting something
-alias cplx="scp snoaccor@lxplus.cer.ch:~/"
 alias rm='rm -i'                        # confirm before deleting
 alias df='df -h'                        # human-readable sizes
 alias free='free -m'                    # show sizes in MB
 alias np='nano -w PKGBUILD'
 alias more=less
 alias lS='ls -lah'
-alias cD='cd ~/Desktop'
-alias work="cd ~/Destop/Work"
+
+alias desk='cd ~/Desktop'
+alias work="cd ~/Desktop/Work"
+alian config="cd ~/.config"
+
 # -- SSH
 alias ssh='ssh -Y'                      
-alias lx='ssh -Y snoaccor@lxplus.cern.ch'  # init session at lxplus
+
 # -- Compression
 alias tar="tar cvzf"
 alias untar="tar -xvf"

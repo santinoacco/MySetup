@@ -1,20 +1,10 @@
-iterm2
-neovim
-visual-studio-code
-pandoc
-# -- python related
+cmake
+git
 ipython
-numpy
-pandas
-matplotlib
-pyspark
-scipy
-matplotlib
-bokeh
-tensorflow
-sklearn
-streamlit
-# -- general apps
-zoom
-telegram
-spotify
+mongosh
+neovim
+openssl@1.1
+pandoc
+pipx
+tree
+wget

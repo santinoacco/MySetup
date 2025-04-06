@@ -1,0 +1,11 @@
+ipython
+numpy
+pandas
+matplotlib
+bokeh
+plotly
+scipy
+tensorflow
+sklearn
+streamlit
+pyspark
