@@ -18,5 +18,3 @@ streamlit
 zoom
 telegram
 spotify
-firefox
-obs-studio

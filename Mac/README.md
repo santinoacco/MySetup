@@ -1,9 +1,12 @@
-
-
 # Setup
 
 1. First install Homebrew
-2. then install the packages listed in `pkg_list.txt` using the comand:
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+2. then install the packages listed in `pkg_list.txt` using the command:
+
+
 
 ## Shortcuts
 
