@@ -25,28 +25,10 @@ first login to your cluster (conect to Atlas cluster)
 - $ mongo "mongodb+srv://<username>:<password>@<cluster>.mongodb.net/admin"
 
 ### commmand line
-to show all databases in the cluster:
-- $ show dbs
-to choose an specific database:
-- $ use <database_name>
-now 'db' is pointing to your desire database.
-to show all collections in said db:
-- $ show collections
-to find under the query '"<key>":"<value>"':
-- $ db.<collection>.find({query})
-to iterate the cursor use 'it'
-to count number of values that fullfil query, append '.count()' to the query.
 
-to get one document:
-- $ db.<collection>.findOne()
+- to iterate the cursor use 'it'
+- to count number of values that fullfil query, append '.count()' to the query.
 
-to insert a document
-- $ db.<collection>.insert(<document>)
-to insert many documents:
-- $ db.<collection>.insert([<document1>,<document2>,..,,<documentN>])
-as default if many are inserted they are done in order!
-to change order you need to add the 'ordered' option:
-- $ db.<collection>.insert([<document1>,<document2>,..,,<documentN>],{'ordered': false})
 
 You can do operations on One or Many documents, you need to use de "updateOne" or "updateMany" commmand and it can take many different operators inside, for instance:
 * to 'increment' the number use "$inc":
