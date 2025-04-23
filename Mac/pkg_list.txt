@@ -2,6 +2,7 @@ cmake
 git
 zsh
 ipython
+iterm2
 neovim
 obsidian
 mongosh
