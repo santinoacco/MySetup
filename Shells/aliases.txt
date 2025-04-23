@@ -1,15 +1,15 @@
 # -- GIT
 alias g='git'
 alias gS='git status'
-alias gA='git add -A'
-alias gC='git commit -am'
+alias gA='git add -A'                   # stage all files
+alias gC='git commit -am'               # commit appending a comment
 
 
 alias cp="cp -i"                        # confirm before overwriting something
 alias rm='rm -i'                        # confirm before deleting
 alias df='df -h'                        # human-readable sizes
 alias free='free -m'                    # show sizes in MB
-alias np='nano -w PKGBUILD'
+#alias np='nano -w PKGBUILD'
 alias more=less
 alias lS='ls -lah'
 
@@ -25,3 +25,5 @@ alias tar="tar cvzf"
 alias untar="tar -xvf"
 alias unzip="7z e"
 
+# -- Docker
+alias compose="docker-compose"
