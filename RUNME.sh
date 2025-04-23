@@ -7,8 +7,8 @@ if [[ "$PLATFORM" == "Linux" ]]; then
   echo "not implemented"
 elif [["$PLATFORM" == "Darwin"]]; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" &&
-  echo >> /Users/snoacco/.zprofile
-  echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> $HOME/.zprofile
+    echo >>/Users/snoacco/.zprofile
+  echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >>$HOME/.zprofile
   eval "$(/opt/homebrew/bin/brew shellenv)"
   brew --version
 
@@ -21,7 +21,8 @@ fi
 echo "Setup configurations ..."
 mkdir $HOME/.config
 cp -r config-files/nvim $HOME/.config/nvim
-cp -r config-files/iterm2 $HOME/.config/iterm2
+# cp -r config-files/iterm2 $HOME/.config/iterm2
+cp config-files/iterm2/* $HOME/Library/Preferences/
 
 # configure GIT
 

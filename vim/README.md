@@ -4,6 +4,18 @@
 but there are powerful plugins out there that make the experience much smoother.
 For that reason the `plugin-manager` impacts quite heavily the setup process.
 
+# Capabilities
+
+-   Autocompletion >> Language Server Protocol [LSP Zero]()
+-   Snippets support
+-   Markdown syntax highlight >> Markdown
+-   Markdown auto-rendering >> [Markdown Preview](https://github.com/iamcco/markdown-preview.nvim)
+-   LaTex auto-rendering
+-   Code folding
+-   File tree >> [Neo Tree](https://github.com/nvim-neo-tree/neo-tree.nvim)
+-   ? Fuzzy finder >> [Telescope](https://github.com/nvim-telescope/telescope.nvim)
+-   JupyterNotebook rendering >> Iron ?
+
 ## NeoVim
 
 -   make executable `lua_nvim_setup.sh` and run it  
@@ -17,11 +29,11 @@ For that reason the `plugin-manager` impacts quite heavily the setup process.
 ```
 - init
 - lua/
-    - config/
+    - core/
         - options.lua
         - keymaps.lua
         - colorscheme.lua
-        - plugin-manager.lua
+        - lazy.lua
     - plugins/
         - telescope: Fuzzy Finder for files at [link](https://github.com/nvim-telescope/telescope.nvim)
         - peek: Markdown preview
@@ -63,7 +75,7 @@ Inside it we find:
     -   https://www.youtube.com/watch?v=4zyZ3sw_ulc&list=PLsz00TDipIffreIaUNk64KxTIkQaGguqn&index=2
 
 ## Vim 
-How to setup vim config
+How to set up vim config
 
 The `vimrc` file located here is my goto vimrc file.
 To set my configuration I do the following:
@@ -80,15 +92,6 @@ cd ~/.config && mkdir vim;
 ```shell
 ```
 
-# Capabilities
-
--   Autocompletion >> Language Server Protocol [LSP Zero]()
--   Snippets support
--   Markdown auto-rendering >> [Mabkdown Preview](https://github.com/iamcco/markdown-preview.nvim)
--   LaTex auto-rendering
--   Code folding
--   File tree >> [Neo Tree](https://github.com/nvim-neo-tree/neo-tree.nvim)
--   ? Fuzzy finder >> [Telescope](https://github.com/nvim-telescope/telescope.nvim)
 
 
 # How to set up Snippets
@@ -97,8 +100,7 @@ All my snippets are defined in the `Snippets` folder
 
 # Notes
 
--   [Commands CheatSheet](../CheatSheets/VimCheatSheet.md)
-
+-   [Commands Cheat Sheet](../CheatSheets/VimCheatSheet.md)
 -   The default `<leader> = \`, current is `<leader> = " "`.
 -   To comment use `gc`
 -   many configs syntax depend on the pluggin-manager,
