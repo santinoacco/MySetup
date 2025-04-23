@@ -10,30 +10,3 @@
 * why do you add a class weight? is it because of MC sample?
 * link to code?
 * to get info on cell building, Mohamed suggests: https://cds.cern.ch/record/1099735/files/larg-pub-2008-002.pdf
-
----
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
