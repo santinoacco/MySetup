@@ -1,10 +1,13 @@
 cmake
 git
+zsh
 ipython
-mongosh
 neovim
+obsidian
+mongosh
 openssl@1.1
 pandoc
 pipx
 tree
 wget
+docker
