@@ -32,6 +32,8 @@ chsh -s $(which zsh)
 echo "Using Oh-My-ZSH"
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 cp config-files/zsh/zshrc $HOME/.config/zsh/.zshrc
+cp config-files/zsh/zprofile $HOME/.config/zsh/.zprofile
+cp -r config-files/zsh/oh-my-zsh $HOME/.config/zsh/.oh-my-zsh
 
 echo "Setup my aliases"
 
