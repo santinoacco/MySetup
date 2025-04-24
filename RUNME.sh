@@ -1,4 +1,4 @@
-#! bin/usr/sh
+#!/usr/bin/zsh
 
 PLATFORM=$(uname)
 
@@ -30,9 +30,8 @@ cp config-files/iterm2/* $HOME/Library/Preferences/
 echo "Setting zsh as default"
 chsh -s $(which zsh)
 echo "Using Oh-My-ZSH"
-sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-cp -r config-files/zsh $HOME/.config/zsh &&
-  cd $HOME/.config/zsh && mv zshrc .zshrc && cd ~
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+cp config-files/zsh/zshrc $HOME/.config/zsh/.zshrc
 
 echo "Setup my aliases"
 
