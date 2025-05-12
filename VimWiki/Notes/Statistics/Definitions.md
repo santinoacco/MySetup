@@ -13,9 +13,6 @@
 ### Recall or Signal Efficiency or Sensitivity
     - a perfect recall score means that all relevant results where retrieve.
 
-## Bayesian Statistics
-    - probabilities measure the **degree of belief**. 
-    - 
 
 ### Variance
  symbol: $$V{.}$$ or $$\sigma^2$$ 

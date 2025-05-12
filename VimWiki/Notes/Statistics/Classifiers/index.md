@@ -11,10 +11,5 @@ Linear clasifiers are those that define the decision boundary using a linear fun
 its geometry depends on the dimensions,
 thus in general it will be an hyperplane.
 
-## [Perceptron](../../Machine_Learning/Perceptron.md)
 
 ## [Hypothesis test](../Hypothesis_Test/index.md)
-
-## Non Linear
-
-### Neural Networks
